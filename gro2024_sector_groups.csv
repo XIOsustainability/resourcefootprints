@@ -1,0 +1,201 @@
+product_code,product,industry_code,industry_name,gro_name,group_2024,group_2019,provisioning
+p01.a,Paddy rice,i01.a,Cultivation of paddy rice,Cultivation of paddy rice,biomass,biomass,Food
+p01.b,Wheat,i01.b,Cultivation of wheat,Cultivation of wheat,biomass,biomass,Food
+p01.c,Cereal grains nec,i01.c,Cultivation of cereal grains nec,Cultivation of cereal grains nec,biomass,biomass,Food
+p01.d,"Vegetables, fruit, nuts",i01.d,"Cultivation of vegetables, fruit, nuts","Cultivation of vegetables, fruit, nuts",biomass,biomass,Food
+p01.e,Oil seeds,i01.e,Cultivation of oil seeds,Cultivation of oil seeds,biomass,biomass,Food
+p01.f,"Sugar cane, sugar beet",i01.f,"Cultivation of sugar cane, sugar beet","Cultivation of sugar cane, sugar beet",biomass,biomass,Food
+p01.g,Plant-based fibers,i01.g,Cultivation of plant-based fibers,Cultivation of plant-based fibers,biomass,biomass,Clothing
+p01.h,Crops nec,i01.h,Cultivation of crops nec,Cultivation of crops nec,biomass,biomass,Food
+p01.i,Cattle,i01.i,Cattle farming,Cattle farming,biomass,biomass,Food
+p01.j,Pigs,i01.j,Pigs farming,Pigs farming,biomass,biomass,Food
+p01.k,Poultry,i01.k,Poultry farming,Poultry farming,biomass,biomass,Food
+p01.l,Meat animals nec,i01.l,Meat animals nec,Meat animals nec,biomass,biomass,Food
+p01.m,Animal products nec,i01.m,Animal products nec,Animal products nec,biomass,biomass,Food
+p01.n,Raw milk,i01.n,Raw milk,Raw milk,biomass,biomass,Food
+p01.o,"Wool, silk-worm cocoons",i01.o,"Wool, silk-worm cocoons","Wool, silk-worm cocoons",biomass,biomass,Clothing
+p01.w.1,Manure (conventional treatment),i01.w.1,"Manure treatment (conventional), storage and land application","Manure treatment (conventional), storage and land application",biomass,biomass,Food
+p01.w.2,Manure (biogas treatment),i01.w.2,"Manure treatment (biogas), storage and land application","Manure treatment (biogas), storage and land application",biomass,biomass,Food
+p02,"Products of forestry, logging and related services (02)",i02,"Forestry, logging and related service activities (02)","Forestry, logging and related service activities (02)",biomass,biomass,Energy
+p05,Fish and other fishing products; services incidental of fishing (05),i05,"Fishing, operating of fish hatcheries and fish farms; service activities incidental to fishing (05)","Fishing, operating of fish hatcheries and fish farms; service activities incidental to fishing (05)",biomass,biomass,Food
+p10.a,Anthracite,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.b,Coking Coal,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.c,Other Bituminous Coal,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.d,Sub-Bituminous Coal,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.e,Patent Fuel,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.f,Lignite/Brown Coal,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.g,BKB/Peat Briquettes,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p10.h,Peat,i10,Mining of coal and lignite; extraction of peat (10),Mining of coal and lignite; extraction of peat (10),fossil resources,fossil resources,Energy
+p11.a,"Crude petroleum and services related to crude oil extraction, excluding surveying",i11.a,"Extraction of crude petroleum and services related to crude oil extraction, excluding surveying","Extraction of crude petroleum and services related to crude oil extraction, excluding surveying",fossil resources,fossil resources,Energy
+p11.b,"Natural gas and services related to natural gas extraction, excluding surveying",i11.b,"Extraction of natural gas and services related to natural gas extraction, excluding surveying","Extraction of natural gas and services related to natural gas extraction, excluding surveying",fossil resources,fossil resources,Energy
+p11.b.1,Natural Gas Liquids,i11.b,"Extraction of natural gas and services related to natural gas extraction, excluding surveying","Extraction of natural gas and services related to natural gas extraction, excluding surveying",fossil resources,fossil resources,Energy
+p11.c,Other Hydrocarbons,i11.c,"Extraction, liquefaction, and regasification of other petroleum and gaseous materials","Extraction, liquefaction, and regasification of other petroleum and gaseous materials",fossil resources,fossil resources,Energy
+p12,Uranium and thorium ores (12),i12,Mining of uranium and thorium ores (12),Mining of uranium and thorium ores,metals,metals,Energy
+p13.1,Iron ores,i13.1,Mining of iron ores,Mining of iron ores,metals,metals,Other
+p13.20.11,Copper ores and concentrates,i13.20.11,Mining of copper ores and concentrates,Mining of copper ores and concentrates,metals,metals,Other
+p13.20.12,Nickel ores and concentrates,i13.20.12,Mining of nickel ores and concentrates,Mining of nickel ores and concentrates,metals,metals,Other
+p13.20.13,Aluminium ores and concentrates,i13.20.13,Mining of aluminium ores and concentrates,Mining of aluminium ores and concentrates,metals,metals,Other
+p13.20.14,Precious metal ores and concentrates,i13.20.14,Mining of precious metal ores and concentrates,Mining of precious metal ores and concentrates,metals,metals,Other
+p13.20.15,"Lead, zinc and tin ores and concentrates",i13.20.15,"Mining of lead, zinc and tin ores and concentrates","Mining of lead, zinc and tin ores and concentrates",metals,metals,Other
+p13.20.16,Other non-ferrous metal ores and concentrates,i13.20.16,Mining of other non-ferrous metal ores and concentrates,Mining of other non-ferrous metal ores and concentrates,metals,metals,Other
+p14.1,Stone,i14.1,Quarrying of stone,Quarrying of stone,non-metallic minerals,non-metallic minerals,Other
+p14.2,Sand and clay,i14.2,Quarrying of sand and clay,Quarrying of sand and clay,non-metallic minerals,non-metallic minerals,Other
+p14.3,"Chemical and fertilizer minerals, salt and other mining and quarrying products n.e.c.",i14.3,"Mining of chemical and fertilizer minerals, production of salt, other mining and quarrying n.e.c.","Mining of chemical and fertilizer minerals, production of salt, other mining and quarrying n.e.c.",non-metallic minerals,non-metallic minerals,Food
+p15.a,Products of meat cattle,i15.a,Processing of meat cattle,Processing of meat cattle,biomass,biomass,Food
+p15.b,Products of meat pigs,i15.b,Processing of meat pigs,Processing of meat pigs,biomass,biomass,Food
+p15.c,Products of meat poultry,i15.c,Processing of meat poultry,Processing of meat poultry,biomass,biomass,Food
+p15.d,Meat products nec,i15.d,Production of meat products nec,Production of meat products nec,biomass,biomass,Food
+p15.e,products of Vegetable oils and fats,i15.e,Processing vegetable oils and fats,Processing vegetable oils and fats,biomass,biomass,Food
+p15.f,Dairy products,i15.f,Processing of dairy products,Processing of dairy products,biomass,biomass,Food
+p15.g,Processed rice,i15.g,Processed rice,Processed rice,biomass,biomass,Food
+p15.h,Sugar,i15.h,Sugar refining,Sugar refining,biomass,biomass,Food
+p15.i,Food products nec,i15.i,Processing of Food products nec,Processing of Food products nec,biomass,biomass,Food
+p15.j,Beverages,i15.j,Manufacture of beverages,Manufacture of beverages,biomass,remaining economy,Food
+p15.k,Fish products,i15.k,Manufacture of fish products,Manufacture of fish products,biomass,remaining economy,Food
+p16,Tobacco products (16),i16,Manufacture of tobacco products (16),Manufacture of tobacco products,remaining economy,remaining economy,Other
+p17,Textiles (17),i17,Manufacture of textiles (17),Manufacture of textiles,biomass,remaining economy,Clothing
+p18,Wearing apparel; furs (18),i18,Manufacture of wearing apparel; dressing and dyeing of fur (18),Manufacture of wearing apparel; dressing and dyeing of fur,biomass,remaining economy,Clothing
+p19,Leather and leather products (19),i19,"Tanning and dressing of leather; manufacture of luggage, handbags, saddlery, harness and footwear (19)","Tanning and dressing of leather; manufacture of luggage, handbags, saddlery, harness and footwear",biomass,remaining economy,Clothing
+p20,Wood and products of wood and cork (except furniture); articles of straw and plaiting materials (20),i20,"Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials (20)","Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials",biomass,remaining economy,Built environment
+p20.w,"Wood material for treatment, Re-processing of secondary wood material into new wood material",i20.w,Re-processing of secondary wood material into new wood material,Re-processing of secondary wood material into new wood material,biomass,biomass,Built environment
+p21.1,Pulp,i21.1,Pulp,Pulp,biomass,biomass,Other
+p21.w.1,"Secondary paper for treatment, Re-processing of secondary paper into new pulp",i21.w.1,Re-processing of secondary paper into new pulp,Re-processing of secondary paper into new pulp,biomass,biomass,Other
+p21.2,Paper and paper products,i21.2,Paper,Paper,biomass,remaining economy,Other
+p22,Printed matter and recorded media (22),i22,"Publishing, printing and reproduction of recorded media (22)","Publishing, printing and reproduction of recorded media",remaining economy,remaining economy,Other
+p23.1.a,Coke Oven Coke,i23.1,Manufacture of coke oven products,Manufacture of coke oven products,fossil resources,fossil resources,Energy
+p23.1.b,Gas Coke,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.1.c,Coal Tar,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.a,Motor Gasoline,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.b,Aviation Gasoline,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.c,Gasoline Type Jet Fuel,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.d,Kerosene Type Jet Fuel,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.e,Kerosene,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.f,Gas/Diesel Oil,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.g,Heavy Fuel Oil,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.h,Refinery Gas,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.i,Liquefied Petroleum Gases (LPG),i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.j,Refinery Feedstocks,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.k,Ethane,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.l,Naphtha,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.m,White Spirit & SBP,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.n,Lubricants,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.o,Bitumen,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.p,Paraffin Waxes,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.q,Petroleum Coke,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.20.r,Non-specified Petroleum Products,i23.2,Petroleum Refinery,Petroleum Refinery,fossil resources,fossil resources,Energy
+p23.3,Nuclear fuel,i23.3,Processing of nuclear fuel,Processing of nuclear fuel,metals,metals,Energy
+p24.a,"Plastics, basic",i24.a,"Plastics, basic","Plastics, basic",fossil resources,fossil resources,Other
+p24.a.w,"Secondary plastic for treatment, Re-processing of secondary plastic into new plastic",i24.a.w,Re-processing of secondary plastic into new plastic,Re-processing of secondary plastic into new plastic,fossil resources,fossil resources,Other
+p24.b,N-fertiliser,i24.b,N-fertiliser,N-fertiliser,fossil resources,non-metallic minerals,Food
+p24.c,P- and other fertiliser,i24.c,P- and other fertiliser,P- and other fertiliser,non-metallic minerals,non-metallic minerals,Food
+p24.d,Chemicals nec,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p24.e,Charcoal,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p24.f,Additives/Blending Components,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p24.g,Biogasoline,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p24.h,Biodiesels,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p24.i,Other Liquid Biofuels,i24.d,Chemicals nec,Chemicals nec,fossil resources,fossil resources,Other
+p25,Rubber and plastic products (25),i25,Manufacture of rubber and plastic products (25),Manufacture of rubber and plastic products,fossil resources,remaining economy,Other
+p26.a,Glass and glass products,i26.a,Manufacture of glass and glass products,Manufacture of glass and glass products,non-metallic minerals,non-metallic minerals,Built environment
+p26.a.w,"Secondary glass for treatment, Re-processing of secondary glass into new glass",i26.a.w,Re-processing of secondary glass into new glass,Re-processing of secondary glass into new glass,non-metallic minerals,non-metallic minerals,Other
+p26.b,Ceramic goods,i26.b,Manufacture of ceramic goods,Manufacture of ceramic goods,non-metallic minerals,non-metallic minerals,Built environment
+p26.c,"Bricks, tiles and construction products, in baked clay",i26.c,"Manufacture of bricks, tiles and construction products, in baked clay","Manufacture of bricks, tiles and construction products, in baked clay",non-metallic minerals,non-metallic minerals,Built environment
+p26.d,"Cement, lime and plaster",i26.d,"Manufacture of cement, lime and plaster","Manufacture of cement, lime and plaster",non-metallic minerals,non-metallic minerals,Built environment
+p26.d.w,"Ash for treatment, Re-processing of ash into clinker",i26.d.w,Re-processing of ash into clinker,Re-processing of ash into clinker,non-metallic minerals,non-metallic minerals,Built environment
+p26.e,Other non-metallic mineral products,i26.e,Manufacture of other non-metallic mineral products n.e.c.,Manufacture of other non-metallic mineral products n.e.c.,non-metallic minerals,non-metallic minerals,Built environment
+p27.a,Basic iron and steel and of ferro-alloys and first products thereof,i27.a,Manufacture of basic iron and steel and of ferro-alloys and first products thereof,Manufacture of basic iron and steel and of ferro-alloys and first products thereof,metals,metals,Built environment
+p27.a.w,"Secondary steel for treatment, Re-processing of secondary steel into new steel",i27.a.w,Re-processing of secondary steel into new steel,Re-processing of secondary steel into new steel,metals,metals,Built environment
+p27.41,Precious metals,i27.41,Precious metals production,Precious metals production,metals,metals,Other
+p27.41.w,"Secondary preciuos metals for treatment, Re-processing of secondary preciuos metals into new preciuos metals",i27.41.w,Re-processing of secondary preciuos metals into new preciuos metals,Re-processing of secondary preciuos metals into new preciuos metals,metals,metals,Other
+p27.42,Aluminium and aluminium products,i27.42,Aluminium production,Aluminium production,metals,metals,Other
+p27.42.w,"Secondary aluminium for treatment, Re-processing of secondary aluminium into new aluminium",i27.42.w,Re-processing of secondary aluminium into new aluminium,Re-processing of secondary aluminium into new aluminium,metals,metals,Other
+p27.43,"Lead, zinc and tin and products thereof",i27.43,"Lead, zinc and tin production","Lead, zinc and tin production",metals,metals,Other
+p27.43.w,"Secondary lead for treatment, Re-processing of secondary lead into new lead",i27.43.w,"Re-processing of secondary lead into new lead, zinc and tin","Re-processing of secondary lead into new lead, zinc and tin",metals,metals,Other
+p27.44,Copper products,i27.44,Copper production,Copper production,metals,metals,Other
+p27.44.w,"Secondary copper for treatment, Re-processing of secondary copper into new copper",i27.44.w,Re-processing of secondary copper into new copper,Re-processing of secondary copper into new copper,metals,metals,Other
+p27.45,Other non-ferrous metal products,i27.45,Other non-ferrous metal production,Other non-ferrous metal production,metals,metals,Other
+p27.45.w,"Secondary other non-ferrous metals for treatment, Re-processing of secondary other non-ferrous metals into new other non-ferrous metals",i27.45.w,Re-processing of secondary other non-ferrous metals into new other non-ferrous metals,Re-processing of secondary other non- ferrous metals into new other non-ferrous metals,metals,metals,Other
+p27.5,Foundry work services,i27.5,Casting of metals,Casting of metals,metals,metals,Other
+p28,"Fabricated metal products, except machinery and equipment (28)",i28,"Manufacture of fabricated metal products, except machinery and equipment (28)","Manufacture of fabricated metal products, except machinery and equipment",remaining economy,remaining economy,Other
+p29,Machinery and equipment n.e.c. (29),i29,Manufacture of machinery and equipment n.e.c. (29),Manufacture of machinery and equipment n.e.c.,remaining economy,remaining economy,Other
+p30,Office machinery and computers (30),i30,Manufacture of office machinery and computers (30),Manufacture of office machinery and computers,remaining economy,remaining economy,Other
+p31,Electrical machinery and apparatus n.e.c. (31),i31,Manufacture of electrical machinery and apparatus n.e.c. (31),Manufacture of electrical machinery and apparatus n.e.c.,remaining economy,remaining economy,Other
+p32,"Radio, television and communication equipment and apparatus (32)",i32,"Manufacture of radio, television and communication equipment and apparatus (32)","Manufacture of radio, television and communication equipment and apparatus",remaining economy,remaining economy,Other
+p33,"Medical, precision and optical instruments, watches and clocks (33)",i33,"Manufacture of medical, precision and optical instruments, watches and clocks (33)","Manufacture of medical, precision and optical instruments, watches and clocks",remaining economy,remaining economy,Other
+p34,"Motor vehicles, trailers and semi-trailers (34)",i34,"Manufacture of motor vehicles, trailers and semi-trailers (34)","Manufacture of motor vehicles, trailers and semi-trailers",remaining economy,remaining economy,Mobility
+p35,Other transport equipment (35),i35,Manufacture of other transport equipment (35),Manufacture of other transport equipment,remaining economy,remaining economy,Mobility
+p36,Furniture; other manufactured goods n.e.c. (36),i36,Manufacture of furniture; manufacturing n.e.c. (36),Manufacture of furniture; manufacturing n.e.c.,remaining economy,remaining economy,Other
+p37,Secondary raw materials,i37,Recycling of waste and scrap,Recycling of waste and scrap,remaining economy,remaining economy,Other
+p37.w.1,"Bottles for treatment, Recycling of bottles by direct reuse",i37.w.1,Recycling of bottles by direct reuse,Recycling of bottles by direct reuse,remaining economy,remaining economy,Other
+p40.11.a,Electricity by coal,i40.11.a,Production of electricity by coal,Production of electricity by coal,remaining economy,remaining economy,Energy
+p40.11.b,Electricity by gas,i40.11.b,Production of electricity by gas,Production of electricity by gas,remaining economy,remaining economy,Energy
+p40.11.c,Electricity by nuclear,i40.11.c,Production of electricity by nuclear,Production of electricity by nuclear,remaining economy,remaining economy,Energy
+p40.11.d,Electricity by hydro,i40.11.d,Production of electricity by hydro,Production of electricity by hydro,remaining economy,remaining economy,Energy
+p40.11.e,Electricity by wind,i40.11.e,Production of electricity by wind,Production of electricity by wind,remaining economy,remaining economy,Energy
+p40.11.f,Electricity by petroleum and other oil derivatives,i40.11.f,Production of electricity by petroleum and other oil derivatives,Production of electricity by petroleum and other oil derivatives,remaining economy,remaining economy,Energy
+p40.11.g,Electricity by biomass and waste,i40.11.g,Production of electricity by biomass and waste,Production of electricity by biomass and waste,remaining economy,remaining economy,Energy
+p40.11.h,Electricity by solar photovoltaic,i40.11.h,Production of electricity by solar photovoltaic,Production of electricity by solar photovoltaic,remaining economy,remaining economy,Energy
+p40.11.i,Electricity by solar thermal,i40.11.i,Production of electricity by solar thermal,Production of electricity by solar thermal,remaining economy,remaining economy,Energy
+p40.11.j,"Electricity by tide, wave, ocean",i40.11.j,"Production of electricity by tide, wave, ocean","Production of electricity by tide, wave, ocean",remaining economy,remaining economy,Energy
+p40.11.k,Electricity by Geothermal,i40.11.k,Production of electricity by Geothermal,Production of electricity by Geothermal,remaining economy,remaining economy,Energy
+p40.11.l,Electricity nec,i40.11.l,Production of electricity nec,Production of electricity nec,remaining economy,remaining economy,Energy
+p40.12,Transmission services of electricity,i40.12,Transmission of electricity,Transmission of electricity,remaining economy,remaining economy,Energy
+p40.13,Distribution and trade services of electricity,i40.13,Distribution and trade of electricity,Distribution and trade of electricity,remaining economy,remaining economy,Energy
+p40.2.a,Coke oven gas,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.2.b,Blast Furnace Gas,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.2.c,Oxygen Steel Furnace Gas,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.2.d,Gas Works Gas,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.2.e,Biogas,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.2.1,Distribution services of gaseous fuels through mains,i40.2,Manufacture of gas; distribution of gaseous fuels through mains,Manufacture of gas; distribution of gaseous fuels through mains,remaining economy,remaining economy,Energy
+p40.3,Steam and hot water supply services,i40.3,Steam and hot water supply,Steam and hot water supply,remaining economy,remaining economy,Energy
+p41,"Collected and purified water, distribution services of water (41)",i41,"Collection, purification and distribution of water (41)","Collection, purification and distribution of water",remaining economy,remaining economy,"Water, sewage, health"
+p45,Construction work (45),i45,Construction (45),Construction,remaining economy,remaining economy,Built environment
+p45.w,"Secondary construction material for treatment, Re-processing of secondary construction material into aggregates",i45.w,Re-processing of secondary construction material into aggregates,Re-processing of secondary construction material into aggregates,remaining economy,remaining economy,Built environment
+p50.a,"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries",i50.a,"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries","Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessories",remaining economy,remaining economy,Mobility
+p50.b,Retail trade services of motor fuel,i50.b,Retail sale of automotive fuel,Retail sale of automotive fuel,remaining economy,remaining economy,Mobility
+p51,"Wholesale trade and commission trade services, except of motor vehicles and motorcycles (51)",i51,"Wholesale trade and commission trade, except of motor vehicles and motorcycles (51)","Wholesale trade and commission trade, except of motor vehicles and motorcycles",remaining economy,remaining economy,Other
+p52,"Retail  trade services, except of motor vehicles and motorcycles; repair services of personal and household goods (52)",i52,"Retail trade, except of motor vehicles and motorcycles; repair of personal and household goods (52)","Retail trade, except of motor vehicles and motorcycles; repair of personal and household goods",remaining economy,remaining economy,Other
+p55,Hotel and restaurant services (55),i55,Hotels and restaurants (55),Hotels and restaurants,remaining economy,remaining economy,Food
+p60.1,Railway transportation services,i60.1,Transport via railways,Transport via railways,remaining economy,remaining economy,Mobility
+p60.2,Other land transportation services,i60.2,Other land transport,Other land transport,remaining economy,remaining economy,Mobility
+p60.3,Transportation services via pipelines,i60.3,Transport via pipelines,Transport via pipelines,remaining economy,fossil resources,Mobility
+p61.1,Sea and coastal water transportation services,i61.1,Sea and coastal water transport,Sea and coastal water transport,remaining economy,remaining economy,Mobility
+p61.2,Inland water transportation services,i61.2,Inland water transport,Inland water transport,remaining economy,remaining economy,Mobility
+p62,Air transport services (62),i62,Air transport (62),Air transport,remaining economy,remaining economy,Mobility
+p63,Supporting and auxiliary transport services; travel agency services (63),i63,Supporting and auxiliary transport activities; activities of travel agencies (63),Supporting and auxiliary transport activities; activities of travel agencies,remaining economy,remaining economy,Mobility
+p64,Post and telecommunication services (64),i64,Post and telecommunications (64),Post and telecommunications,remaining economy,remaining economy,Other
+p65,"Financial intermediation services, except insurance and pension funding services (65)",i65,"Financial intermediation, except insurance and pension funding (65)","Financial intermediation, except insurance and pension funding",remaining economy,remaining economy,Other
+p66,"Insurance and pension funding services, except compulsory social security services (66)",i66,"Insurance and pension funding, except compulsory social security (66)","Insurance and pension funding, except compulsory social security",remaining economy,remaining economy,Other
+p67,Services auxiliary to financial intermediation (67),i67,Activities auxiliary to financial intermediation (67),Activities auxiliary to financial intermediation,remaining economy,remaining economy,Other
+p70,Real estate services (70),i70,Real estate activities (70),Real estate activities,remaining economy,remaining economy,Other
+p71,Renting services of machinery and equipment without operator and of personal and household goods (71),i71,Renting of machinery and equipment without operator and of personal and household goods (71),Renting of machinery and equipment without operator and of personal and household goods,remaining economy,remaining economy,Other
+p72,Computer and related services (72),i72,Computer and related activities (72),Computer and related activities,remaining economy,remaining economy,Other
+p73,Research and development services (73),i73,Research and development (73),Research and development,remaining economy,remaining economy,Education
+p74,Other business services (74),i74,Other business activities (74),Other business activities,remaining economy,remaining economy,Other
+p75,Public administration and defence services; compulsory social security services (75),i75,Public administration and defence; compulsory social security (75),Public administration and defence; compulsory social security,remaining economy,remaining economy,Other
+p80,Education services (80),i80,Education (80),Education,remaining economy,remaining economy,Education
+p85,Health and social work services (85),i85,Health and social work (85),Health and social work,remaining economy,remaining economy,"Water, sewage, health"
+p90.1.a,Food waste for treatment: incineration,i90.1.a,Incineration of waste: Food,Incineration of waste: Food,remaining economy,remaining economy,Food
+p90.1.b,Paper waste for treatment: incineration,i90.1.b,Incineration of waste: Paper,Incineration of waste: Paper,remaining economy,remaining economy,Other
+p90.1.c,Plastic waste for treatment: incineration,i90.1.c,Incineration of waste: Plastic,Incineration of waste: Plastic,remaining economy,remaining economy,Other
+p90.1.d,Intert/metal waste for treatment: incineration,i90.1.d,Incineration of waste: Metals and Inert materials,Incineration of waste: Metals and Inert materials,remaining economy,remaining economy,Other
+p90.1.e,Textiles waste for treatment: incineration,i90.1.e,Incineration of waste: Textiles,Incineration of waste: Textiles,remaining economy,remaining economy,Clothing
+p90.1.f,Wood waste for treatment: incineration,i90.1.f,Incineration of waste: Wood,Incineration of waste: Wood,remaining economy,remaining economy,Other
+p90.1.g,Oil/hazardous waste for treatment: incineration,i90.1.g,Incineration of waste: Oil/Hazardous waste,Incineration of waste: Oil/Hazardous waste,remaining economy,remaining economy,Other
+p90.2.a,Food waste for treatment: biogasification and land application,i90.2.a,"Biogasification of food waste, incl. land application","Biogasification of food waste, incl. land application",remaining economy,remaining economy,Food
+p90.2.b,Paper waste for treatment: biogasification and land application,i90.2.b,"Biogasification of paper, incl. land application","Biogasification of paper, incl. land application",remaining economy,remaining economy,Energy
+p90.2.c,Sewage sludge for treatment: biogasification and land application,i90.2.c,"Biogasification of sewage slugde, incl. land application","Biogasification of sewage slugde, incl. land application",remaining economy,remaining economy,Energy
+p90.3.a,Food waste for treatment: composting and land application,i90.3.a,"Composting of food waste, incl. land application","Composting of food waste, incl. land application",remaining economy,remaining economy,Food
+p90.3.b,Paper and wood waste for treatment: composting and land application,i90.3.b,"Composting of paper and wood, incl. land application","Composting of paper and wood, incl. land application",remaining economy,remaining economy,Other
+p90.4.a,Food waste for treatment: waste water treatment,i90.4.a,"Waste water treatment, food","Waste water treatment, food",remaining economy,remaining economy,"Water, sewage, health"
+p90.4.b,Other waste for treatment: waste water treatment,i90.4.b,"Waste water treatment, other","Waste water treatment, other",remaining economy,remaining economy,"Water, sewage, health"
+p90.5.a,Food waste for treatment: landfill,i90.5.a,Landfill of waste: Food,Landfill of waste: Food,remaining economy,remaining economy,Food
+p90.5.b,Paper for treatment: landfill,i90.5.b,Landfill of waste: Paper,Landfill of waste: Paper,remaining economy,remaining economy,Other
+p90.5.c,Plastic waste for treatment: landfill,i90.5.c,Landfill of waste: Plastic,Landfill of waste: Plastic,remaining economy,remaining economy,Other
+p90.5.d,Inert/metal/hazardous waste for treatment: landfill,i90.5.d,Landfill of waste: Inert/metal/hazardous,Landfill of waste: Inert/metal/hazardous,remaining economy,remaining economy,Other
+p90.5.e,Textiles waste for treatment: landfill,i90.5.e,Landfill of waste: Textiles,Landfill of waste: Textiles,remaining economy,remaining economy,Clothing
+p90.5.f,Wood waste for treatment: landfill,i90.5.f,Landfill of waste: Wood,Landfill of waste: Wood,remaining economy,remaining economy,Other
+p91,Membership organisation services n.e.c. (91),i91,Activities of membership organisation n.e.c. (91),Activities of membership organisation n.e.c.,remaining economy,remaining economy,Other
+p92,"Recreational, cultural and sporting services (92)",i92,"Recreational, cultural and sporting activities (92)","Recreational, cultural and sporting activities",remaining economy,remaining economy,Other
+p93,Other services (93),i93,Other service activities (93),Other service activities,remaining economy,remaining economy,Other
+p95,Private households with employed persons (95),i95,Private households with employed persons (95),Private households with employed persons,remaining economy,remaining economy,Other
+p99,Extra-territorial organizations and bodies,i99,Extra-territorial organizations and bodies,Extra-territorial organizations and bodies,remaining economy,remaining economy,Other

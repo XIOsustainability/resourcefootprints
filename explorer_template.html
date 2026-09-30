@@ -1,0 +1,923 @@
+<title>Footprint explorer | Resource footprints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#f3f5f4; --surface:#ffffff; --surface-2:#eef1f0; --line:#dde2e1; --grid:#e8ecea;
+  --ink:#121a1c; --ink-2:#4c5659; --ink-3:#7f898b; --muted-mark:#c3cbca;
+  --accent:#0d5f58; --accent-ink:#ffffff; --accent-soft:#dcefec;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --gap-fill:rgba(42,120,214,.10);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","IBM Plex Sans","Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#101413; --surface:#181d1c; --surface-2:#212726; --line:#2e3634; --grid:#262d2c;
+    --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e; --muted-mark:#46504e;
+    --accent:#5cc3b6; --accent-ink:#0b1a18; --accent-soft:#1d3532;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+    --gap-fill:rgba(57,135,229,.16);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#101413; --surface:#181d1c; --surface-2:#212726; --line:#2e3634; --grid:#262d2c;
+  --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e; --muted-mark:#46504e;
+  --accent:#5cc3b6; --accent-ink:#0b1a18; --accent-soft:#1d3532;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --gap-fill:rgba(57,135,229,.16);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.site-foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px;max-width:92ch}
+.site-foot h2{font-family:var(--cond);font-weight:600;font-size:16px;color:var(--ink);margin:18px 0 6px}
+.site-foot p{margin:0 0 10px}
+.site-foot a{color:var(--accent)}
+.site-foot summary{cursor:pointer;color:var(--accent);font-weight:500}
+.site-foot pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:10px 0 0;max-height:420px;overflow:auto}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;margin:0}
+.wrap{padding-inline:20px;padding-block:18px 40px;max-width:1500px;margin:0 auto}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:14px}
+header.top h1{font-family:var(--cond);font-weight:600;font-size:22px;letter-spacing:.01em;margin:0;text-wrap:balance}
+header.top .meta{color:var(--ink-2);font-size:13px}
+header.top .meta b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}}
+/* sidebar */
+aside.picker{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);display:flex;flex-direction:column;gap:10px}
+@media (max-width:900px){aside.picker{position:static;max-height:none}}
+.picker h2{font-family:var(--cond);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);margin:0;font-weight:600}
+.sel-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:2px 4px 2px 8px;font-size:12.5px;cursor:default}
+.chip .sw{width:10px;height:10px;border-radius:3px;flex:none}
+.chip button{border:0;background:transparent;color:var(--ink-3);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;border-radius:999px}
+.chip button:hover{color:var(--ink);background:var(--line)}
+.hint{color:var(--ink-3);font-size:12px}
+input[type=search],input[type=text],select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.reglist{overflow:auto;flex:1;min-height:120px;border-top:1px solid var(--line);padding-top:6px;margin-inline:-4px;padding-inline:4px}
+@media (max-width:900px){.reglist{max-height:320px}}
+.reglist h3{font-family:var(--cond);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin:10px 0 2px;font-weight:600}
+.reg{display:flex;align-items:center;gap:8px;padding:3px 4px;border-radius:5px;cursor:pointer;font-size:13px}
+.reg:hover{background:var(--surface-2)}
+.reg input{margin:0;accent-color:var(--accent)}
+.reg .code{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-left:auto}
+.reg .del{border:0;background:transparent;color:var(--ink-3);cursor:pointer;padding:0 2px}
+.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:6px 10px;cursor:pointer}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.builder{border:1px solid var(--line);border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:8px;background:var(--surface-2)}
+.builder .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px;max-height:220px;overflow:auto}
+.builder label{font-size:12.5px;display:flex;gap:6px;align-items:center}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* main */
+main{min-width:0;display:flex;flex-direction:column;gap:12px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin}
+nav.tabs button{font:inherit;font-family:var(--cond);font-weight:500;font-size:14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink-2);padding:8px 12px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs button:hover{color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end}
+.ctl{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ctl > span{font-family:var(--cond);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:600}
+.ctl select{width:auto;max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--ink-2);padding:6px 10px;cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.yearbox{display:flex;align-items:center;gap:8px}
+.yearbox input[type=range]{width:180px;accent-color:var(--accent)}
+.yearbox output{font-family:var(--mono);font-size:14px;min-width:3.2em}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 14px 10px}
+.panel h2{font-family:var(--cond);font-weight:600;font-size:16px;margin:0 0 2px;text-wrap:balance}
+.panel .sub{color:var(--ink-2);font-size:12.5px;margin:0 0 8px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2);margin:4px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.legend i.box{height:10px;width:10px;border-radius:3px}
+.legend i.dot{border-top:2px dotted var(--ink-3);height:0;background:none!important;border-radius:0}
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;overflow:visible}
+.chart text{fill:var(--ink-2);font-family:var(--sans);font-size:11.5px}
+.chart .num{font-family:var(--mono);font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:7px 9px;font-size:12px;min-width:150px;max-width:280px;z-index:5}
+.tip .t{font-weight:600;margin-bottom:3px;font-family:var(--cond);font-size:13px}
+.tip .r{display:flex;align-items:center;gap:6px;justify-content:space-between}
+.tip .r .l{display:flex;align-items:center;gap:6px;color:var(--ink-2);min-width:0}
+.tip .r .l span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tip .r b{font-family:var(--mono);font-weight:500;color:var(--ink)}
+.tip .sw{width:9px;height:9px;border-radius:2px;flex:none}
+.tip .note{color:var(--ink-3);font-size:11px;margin-top:3px}
+.multiples{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.multiples .cell h3{font-size:13px;font-weight:600;margin:0 0 2px;display:flex;align-items:center;gap:6px}
+.multiples .cell h3 .sw{width:10px;height:10px;border-radius:3px}
+.notes{color:var(--ink-2);font-size:12.5px;max-width:78ch;margin:6px 0 0}
+.notes p{margin:4px 0}
+.tablewrap{overflow-x:auto;margin-top:8px}
+table.data{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
+table.data th,table.data td{padding:3px 8px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
+table.data th:first-child,table.data td:first-child{text-align:left;position:sticky;left:0;background:var(--surface)}
+table.data td{font-family:var(--mono)}
+.empty{padding:40px 10px;text-align:center;color:var(--ink-3)}
+.twocol{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px}
+@media (max-width:1100px){.twocol{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.wrap{padding-inline:16px}.yearbox input[type=range]{width:130px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Footprint explorer</h1>
+    <div class="meta">EXIOBASE <b>3.11.3</b>, release expected 30 October 2026 · <b>49</b> countries and rest-of-world regions · <b>1995-2024</b> · production, consumption and import-embodied accounts</div>
+  </header>
+  <div class="layout">
+    <aside class="picker" aria-label="Regions">
+      <div class="row" style="justify-content:space-between"><h2>Selected regions</h2><span class="hint" id="selCount"></span></div>
+      <div class="sel-chips" id="chips"></div>
+      <input type="search" id="regSearch" placeholder="Search countries or groups" aria-label="Search regions">
+      <div class="reglist" id="regList"></div>
+      <button class="btn" id="openBuilder" type="button">Build a custom group</button>
+      <div class="builder" id="builder" hidden>
+        <input type="text" id="grpName" placeholder="Group name, e.g. Nordics" aria-label="Group name">
+        <div class="grid" id="grpMembers"></div>
+        <div class="row"><button class="btn primary" id="saveGrp" type="button">Save group</button><button class="btn" id="cancelGrp" type="button">Cancel</button><span class="hint" id="grpMsg"></span></div>
+      </div>
+    </aside>
+    <main>
+      <nav class="tabs" role="tablist" id="tabs"></nav>
+      <div class="controls" id="controls"></div>
+      <section id="view"></section>
+    </main>
+  </div>
+  <footer class="site-foot">
+    <h2>About these results</h2>
+    <p>Calculated from EXIOBASE 3.11.3 (release expected 30 October 2026; results can still change before then). Greenhouse gases are GWP100 (IPCC AR6). Biodiversity loss, freshwater eutrophication and PM health impacts are characterised with UNEP GLAM; water stress is blue water consumption weighted by AWARE. Resource groups follow UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1, with impacts counted in the sector where they occur. Years drawn dotted rest on projected tables or carried-forward accounts; see <a href="/coverage">data coverage</a>. Custom groups are stored in your browser only.</p>
+    <h2 id="licence">Data licence</h2>
+    <p>The results on this page are derived from EXIOBASE and are published with attribution to EXIOBASE, as section (b) of the EXIOBASE licence requires for derived results. They are totals and ratios for countries and regions; EXIOBASE coefficients (such as direct or supply-chain multipliers and emission factors) and raw data from the EXIOBASE package are not published here.</p>
+    <p>EXIOBASE is released under a dual commercial and non-commercial licence. Non-commercial use by universities and non-profit research institutes, environmental and social NGOs, government bodies and publicly owned organisations is free under a customised derivative of the CC BY-NC-SA 4.0 licence. Any other use needs a commercial licence. Copyright: MSUT, IOTs and emission data &copy; 2024 XIO SA AS; material extensions &copy; 2024 Vienna University of Economics and Business (WU), released under CC BY-SA. Licence enquiries: exiobase-support@googlegroups.com.</p>
+    <details>
+      <summary>Full EXIOBASE licence text</summary>
+      <pre>EXIOBASE is released under a dual commercial and non-commercial license. Please see the conditions below for details. Feel free to contact us at exiobase-support@googlegroups.com for any clarifications.
+
+****************************************
+Non-commercial, academic use
+****************************************
+
+For non-commercial use, EXIOBASE v3.9.*, v3.10.* and later is released under a customized derivative of the CC-BY-SA-NC license, incorporating additional definitions listed in part (a) and (b), and with database components governed by specific licenses as detailed in part (c). Other than as set out in these additional definitions, the terms of CC-BY-SA-NC license apply to the use of EXIOBASE (See https://creativecommons.org/licenses/by-nc-sa/4.0/ for details).  
+
+(a) Non-commercial use
+This license allows for free non-commercial use by the following types of institutions:  
+	(1) Universities and non-profit research institutes. 
+	(2) Environmental/social focused NGO. 
+	(3) Government bodies and agencies at any level (international, national, regional, or local), including statistics offices, environmental agencies, and other public administrations.
+ 	(4) Organisations wholly owned by one or more public bodies, where the use is for public-interest purposes and not embedded in commercial products or services.
+
+“Non-commercial use” means any use that is not intended to generate financial gain or commercial advantage for the user or any other users. Specifically, it excludes: 
+	(i) Contracted or commissioned activities (&#x27;work-for-hire&#x27;) by the entities listed above; 
+	(ii) Any use intended to generate revenue, including but not limited to consultancy fees or licensing fees, except for grant funding; and 
+	(iii) Any use by for-profit or commercial entities. 
+
+(b) Derivative works and publication
+Derived results can be published under any license provided it includes an attribution to EXIOBASE. Such publication must not include the original or derived coefficients (e.g., direct or full supply chain multipliers, scope 1, 2, 3 emission factors) or any raw data points from the EXIOBASE package.
+Creating derivative works that compete with EXIOBASE by any user (i.e., in the creation of other input-output databases or databases of coefficient/multipliers) is not permitted without prior written permission of the copyright holders. 
+
+(c) Copyright Notice
+EXIOBASE is managed by the EXIOBASE consortium. 
+Copyright holders
+	- MSUT, IOTs, emission data: © 2024, XIO SA AS  
+	- Material extensions: © 2024, Vienna University of Economics and Business (WU) 
+	- The material extensions are released under a CC-BY-SA license instead of the license conditions above.
+
+****************************************
+Commercial use
+****************************************
+
+Commercial licenses, which allow for use for any case not covered in the non-commercial license can be provided. For license inquiries or help in use of EXIOBASE data for spend-based emission factors, or other applications, email exiobase-support@googlegroups.com  
+
+The funding accumulated through any licensing and support is being used to fund updates to the database, and will result in more regular, reliable and precise updates benefiting everyone.</pre>
+    </details>
+  </footer>
+</div>
+
+<script>
+/*__DATA__*/
+</script>
+<script>
+(function(){
+const D = window.EXIO, Y = D.years, NY = Y.length;
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+
+/* ---------- regions ---------- */
+const NAMES = {AT:'Austria',AU:'Australia',BE:'Belgium',BG:'Bulgaria',BR:'Brazil',CA:'Canada',CH:'Switzerland',CN:'China',CY:'Cyprus',CZ:'Czechia',DE:'Germany',DK:'Denmark',EE:'Estonia',ES:'Spain',FI:'Finland',FR:'France',GB:'United Kingdom',GR:'Greece',HR:'Croatia',HU:'Hungary',ID:'Indonesia',IE:'Ireland',IN:'India',IT:'Italy',JP:'Japan',KR:'South Korea',LT:'Lithuania',LU:'Luxembourg',LV:'Latvia',MT:'Malta',MX:'Mexico',NL:'Netherlands',NO:'Norway',PL:'Poland',PT:'Portugal',RO:'Romania',RU:'Russia',SE:'Sweden',SI:'Slovenia',SK:'Slovakia',TR:'Türkiye',TW:'Taiwan',US:'United States',WA:'RoW Asia and Pacific',WE:'RoW Europe',WF:'RoW Africa',WL:'RoW Americas',WM:'RoW Middle East',ZA:'South Africa'};
+const COUNTRIES = D.regions.filter(r => !r.startsWith('W')).sort((a,b)=>NAMES[a].localeCompare(NAMES[b]));
+const ROW = D.regions.filter(r => r.startsWith('W'));
+const EU27 = D.eu.filter(r => r !== 'GB');
+const ADV = D.advanced;
+const PRESETS = [
+  {key:'G:Global', name:'World', cat:'Economic groups', members:D.regions.slice()},
+  {key:'G:Advanced', name:'Advanced economies', cat:'Economic groups', members:ADV},
+  {key:'G:Emerging', name:'Emerging and developing', cat:'Economic groups', members:D.regions.filter(r=>!ADV.includes(r))},
+  {key:'G:EU27', name:'EU27', cat:'Economic groups', members:EU27},
+  {key:'G:G7', name:'G7', cat:'Economic groups', members:['US','JP','DE','GB','FR','IT','CA']},
+  {key:'G:BRICS', name:'BRICS (original five)', cat:'Economic groups', members:['BR','RU','IN','CN','ZA']},
+  {key:'G:Europe', name:'Europe', cat:'Continental', members:EU27.concat(['GB','CH','NO','RU','WE'])},
+  {key:'G:AsiaPac', name:'Asia and Pacific', cat:'Continental', members:['CN','JP','KR','TW','IN','ID','AU','WA']},
+  {key:'G:NorthAm', name:'North America', cat:'Continental', members:['US','CA']},
+  {key:'G:LatAm', name:'Latin America', cat:'Continental', members:['MX','BR','WL']},
+  {key:'G:Africa', name:'Africa', cat:'Continental', members:['ZA','WF']},
+  {key:'G:MidEast', name:'Middle East and Türkiye', cat:'Continental', members:['TR','WM']},
+];
+let CUSTOM = [];
+try{ CUSTOM = JSON.parse(localStorage.getItem('exio-custom-groups')||'[]').filter(g=>g && g.key && Array.isArray(g.members) && g.members.length); }catch(e){ CUSTOM=[]; }
+function saveCustom(){ try{ localStorage.setItem('exio-custom-groups', JSON.stringify(CUSTOM)); }catch(e){} }
+function groupDef(key){ return PRESETS.find(g=>g.key===key) || CUSTOM.find(g=>g.key===key); }
+function isGroup(key){ return key.startsWith('G:') || key.startsWith('C:'); }
+function regName(key){ if(!isGroup(key)) return NAMES[key]||key; const g=groupDef(key); return g?g.name:key; }
+function members(key){ if(!isGroup(key)) return [key]; const g=groupDef(key); return g?g.members:[]; }
+
+/* ---------- indicators ---------- */
+// f = multiplier on the native unit; pc divides by persons, gdp by USD PPP
+const IND = [
+ {id:'GWP100 - AR6 - total', label:'GHG emissions', fam:'Climate', abs:[1e-9,'Mt CO₂-eq'], pc:[1e-3,'t CO₂-eq per person'], gdp:[1,'kg CO₂-eq per $ PPP']},
+ {id:'GWP100 - AR6 - total combustion', label:'GHG, fuel combustion', fam:'Climate', abs:[1e-9,'Mt CO₂-eq'], pc:[1e-3,'t CO₂-eq per person'], gdp:[1,'kg CO₂-eq per $ PPP']},
+ {id:'GWP100 - AR6 - total non combustion', label:'GHG, non-combustion (incl. F-gases)', fam:'Climate', abs:[1e-9,'Mt CO₂-eq'], pc:[1e-3,'t CO₂-eq per person'], gdp:[1,'kg CO₂-eq per $ PPP']},
+ {id:'Energy use - Net', label:'Net energy use', fam:'Energy', abs:[1e-3,'PJ'], pc:[1e3,'GJ per person'], gdp:[1e6,'MJ per $ PPP']},
+ {id:'Domestic Extraction Used - Total', label:'Materials, total', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Primary Crops', label:'Materials, primary crops', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Crop residues', label:'Materials, crop residues', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Forestry', label:'Materials, forestry', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Fishery', label:'Materials, fishery', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Non-Metallic Minerals', label:'Materials, non-metallic minerals', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Domestic Extraction Used - Metal Ores', label:'Materials, metal ores', fam:'Materials', abs:[1e-3,'Mt'], pc:[1e3,'t per person'], gdp:[1e6,'kg per $ PPP'], cf:2021},
+ {id:'Land - Total', label:'Land use, total', fam:'Land', abs:[1e-3,'thousand km²'], pc:[1e6,'m² per person'], gdp:[1e9,'m² per $1,000 PPP']},
+ {id:'Cropland', label:'Cropland', fam:'Land', abs:[1e-3,'thousand km²'], pc:[1e6,'m² per person'], gdp:[1e9,'m² per $1,000 PPP']},
+ {id:'Pasture/Meadow/Grassland', label:'Pasture and grassland', fam:'Land', abs:[1e-3,'thousand km²'], pc:[1e6,'m² per person'], gdp:[1e9,'m² per $1,000 PPP']},
+ {id:'Water Consumption Blue - Total (excl. once-through)', label:'Blue water consumption', fam:'Water', abs:[1,'Mm³'], pc:[1e6,'m³ per person'], gdp:[1e9,'L per $ PPP']},
+ {id:'Water stress (AWARE)', label:'Water stress (AWARE)', fam:'Water', abs:[1e-3,'km³ world-eq'], pc:[1e6,'m³ world-eq per person'], gdp:[1e9,'L world-eq per $ PPP']},
+ {id:'Biodiversity loss, land use', label:'Biodiversity loss, land use', fam:'Biodiversity', abs:[1e6,'10⁻⁶ global PDF·yr'], pc:[1e12,'10⁻¹² global PDF·yr per person'], gdp:[1e15,'10⁻¹⁵ global PDF·yr per $ PPP']},
+ {id:'Biodiversity loss, freshwater eutrophication', label:'Biodiversity loss, freshwater eutrophication', fam:'Biodiversity', abs:[1e6,'10⁻⁶ global PDF·yr'], pc:[1e12,'10⁻¹² global PDF·yr per person'], gdp:[1e15,'10⁻¹⁵ global PDF·yr per $ PPP']},
+ {id:'PM health impacts', label:'PM health impacts', fam:'Health', abs:[1e-3,'thousand DALY'], pc:[1e5,'DALY per 100,000 people'], gdp:[1e9,'DALY per $1bn PPP']},
+ {id:'Value Added - Total', label:'Value added', fam:'Economy and labour', abs:[1e-3,'bn EUR'], pc:[1e6,'EUR per person'], gdp:[1e6,'EUR per $ PPP']},
+ {id:'Employment hours - Total', label:'Employment, hours', fam:'Economy and labour', abs:[1e-3,'bn hours'], pc:[1e6,'hours per person'], gdp:[1e9,'hours per $1,000 PPP'], proj:2023},
+ {id:'Employment people - Total', label:'Employment, persons', fam:'Economy and labour', abs:[1e-3,'million persons'], pc:[1e6,'jobs per 1,000 people'], gdp:[1e9,'jobs per $1m PPP'], proj:2023},
+];
+const indOf = id => IND.find(i=>i.id===id);
+function projFrom(ind){ return Math.min(ind.proj||2024, ind.cf||9999); }
+const COMP_INDS = D.flow_indicators;
+const CATS = D.cats;
+const CAT_LABEL = {'Clothing and Footware':'Clothing and footwear','Other':'Other products'};
+const GRP = D.groups;
+const GRP_LABEL = {'biomass':'Biomass','fossil resources':'Fossil resources','metals':'Metals','non-metallic minerals':'Non-metallic minerals','remaining economy':'Remaining economy','households':'Households (direct)'};
+const GRP_COLOR = {'biomass':'var(--s1)','fossil resources':'var(--s2)','metals':'var(--s3)','non-metallic minerals':'var(--s4)','remaining economy':'var(--muted-mark)','households':'var(--s5)'};
+const EXTRACT = ['biomass','fossil resources','metals','non-metallic minerals'];
+const ACC = {PBA:'Production', CBA:'Consumption', imp:'Imports embodied'};
+const ACC_LONG = {PBA:'production-based (territorial)', CBA:'consumption-based footprint', imp:'embodied in imports'};
+const METRIC = {abs:'Total', pc:'Per capita', gdp:'Per GDP (PPP)', idx:'Index 1995 = 100'};
+const BREAK = {
+  'GWP100 - AR6 - total':{label:'GHG by source type', parts:['GWP100 - AR6 - total combustion','GWP100 - AR6 - total non combustion'], names:['Fuel combustion','Non-combustion (incl. F-gases)'], rest:null},
+  'Domestic Extraction Used - Total':{label:'Materials by type', parts:['Domestic Extraction Used - Primary Crops','Domestic Extraction Used - Crop residues','Domestic Extraction Used - Forestry','Domestic Extraction Used - Fishery','Domestic Extraction Used - Non-Metallic Minerals','Domestic Extraction Used - Metal Ores'], names:['Primary crops','Crop residues','Forestry','Fishery','Non-metallic minerals','Metal ores'], rest:'Not itemised (incl. grazing)'},
+  'Land - Total':{label:'Land use by type', parts:['Cropland','Pasture/Meadow/Grassland'], names:['Cropland','Pasture and grassland'], rest:'Other land (incl. forest)'},
+};
+
+/* ---------- aggregation ---------- */
+const cache = new Map();
+function sumArrays(arrs){
+  const out = new Array(NY).fill(0);
+  for(let t=0;t<NY;t++){ for(const a of arrs){ const v=a?a[t]:null; if(v==null){ out[t]=null; break; } out[t]+=v; } }
+  return out;
+}
+function region(key){
+  if(cache.has(key)) return cache.get(key);
+  const mem = members(key); let R;
+  if(!isGroup(key)) R = {values:D.values[key], macro:D.macro[key], comp:D.comp[key]};
+  else {
+    const values={}, macro={}, comp={};
+    for(const acc of ['PBA','CBA','imp']){ values[acc]={}; for(const ind of IND) values[acc][ind.id]=sumArrays(mem.map(m=>D.values[m][acc][ind.id])); }
+    for(const k of ['population','gdp_ppp','gdp_usd_constant']) macro[k]=sumArrays(mem.map(m=>D.macro[m][k]));
+    for(const ind of COMP_INDS){ comp[ind]={}; for(const c of CATS) comp[ind][c]=sumArrays(mem.map(m=>(D.comp[m]&&D.comp[m][ind])?D.comp[m][ind][c]:null)); }
+    R={values,macro,comp};
+  }
+  cache.set(key,R); return R;
+}
+const rgCache = new Map();
+function rgOf(key, view, indId){
+  const ck=key+'|'+view+'|'+indId; if(rgCache.has(ck)) return rgCache.get(ck);
+  const mem=members(key), out={};
+  for(const g of GRP) out[g]=sumArrays(mem.map(m=>D.rg[view][indId][m][g]));
+  rgCache.set(ck,out); return out;
+}
+function scaleSeries(key, indId, arr, metric){
+  const ind=indOf(indId), R=region(key);
+  if(metric==='abs') return arr.map(v=>v==null?null:v*ind.abs[0]);
+  if(metric==='pc') return arr.map((v,t)=>(v==null||!R.macro.population[t])?null:v*ind.pc[0]/R.macro.population[t]);
+  return arr;
+}
+function series(key, indId, acc, metric){
+  const R=region(key), ind=indOf(indId), raw=R.values[acc][indId];
+  if(metric==='idx'){ const b=raw[0]; return raw.map(v=>(v==null||!b)?null:v/b*100); }
+  const f=ind[metric][0];
+  if(metric==='abs') return raw.map(v=>v==null?null:v*f);
+  const den = metric==='pc'?R.macro.population:R.macro.gdp_ppp;
+  return raw.map((v,t)=>(v==null||!den[t])?null:v*f/den[t]);
+}
+function unitOf(indId, metric){ return metric==='idx'?'1995 = 100':indOf(indId)[metric][1]; }
+
+/* ---------- state ---------- */
+const SLOTS = 8;
+const state = {
+  tab:'trends', sel:[], slot:{}, focus:'G:EU27',
+  ind:'GWP100 - AR6 - total', acc:'CBA', metric:'pc', year:2023,
+  rankSet:'countries', compInd:'GWP100 - AR6 - total', compMetric:'share', rgInd:'GWP100 - AR6 - total', rgView:'PBA', rgMetric:'abs', skInd:'GWP100 - AR6 - total', skYear:2024, breakInd:'GWP100 - AR6 - total', breakMetric:'abs', breakAcc:'CBA', trails:true, showTable:false,
+};
+function colorVar(slot){ return `var(--s${slot+1})`; }
+function colorOf(key){ return state.slot[key]!=null?colorVar(state.slot[key]):'var(--ink-3)'; }
+function select(key){
+  if(state.sel.includes(key)) return true;
+  if(state.sel.length>=SLOTS) return false;
+  const used=new Set(Object.values(state.slot));
+  let s=0; while(used.has(s)) s++;
+  state.slot[key]=s; state.sel.push(key); return true;
+}
+function deselect(key){ state.sel=state.sel.filter(k=>k!==key); delete state.slot[key]; }
+['G:Advanced','G:Emerging','G:EU27','US','CN','IN'].forEach(select);
+try{ const t=localStorage.getItem('exio-tab'); if(t) state.tab=t; }catch(e){}
+const h=(location.hash||'').slice(1); if(h) state.tab=h;
+
+/* ---------- formatting ---------- */
+function fmt(v, digits=3){
+  if(v==null||!isFinite(v)) return 'n/a';
+  const a=Math.abs(v);
+  if(a===0) return '0';
+  if(a>=1e4) return Math.round(v).toLocaleString('en-US');
+  const p = Math.max(0, digits-1-Math.floor(Math.log10(a)));
+  return v.toLocaleString('en-US',{minimumFractionDigits:Math.min(p,6),maximumFractionDigits:Math.min(p,6)});
+}
+function fmtTick(v, step){
+  const a=Math.abs(v);
+  if(a>=1e6) return (v/1e6).toLocaleString('en-US',{maximumFractionDigits:2})+'M';
+  if(a>=1e4) return Math.round(v).toLocaleString('en-US');
+  const dec=Math.max(0,-Math.floor(Math.log10(step||1)));
+  return v.toLocaleString('en-US',{minimumFractionDigits:Math.min(dec,6),maximumFractionDigits:Math.min(dec,6)});
+}
+function niceTicks(min,max,n){
+  if(!(max>min)){ max=min+1; }
+  const raw=(max-min)/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), e=raw/mag;
+  const step=(e>=7.5?10:e>=3.5?5:e>=1.5?2:1)*mag;
+  const lo=Math.floor(min/step+1e-9)*step, hi=Math.ceil(max/step-1e-9)*step;
+  const t=[]; for(let v=lo; v<=hi+step*1e-6; v+=step) t.push(+v.toPrecision(12));
+  return {lo,hi,step,ticks:t};
+}
+function logTicks(lo,hi){
+  const t=[]; const a=Math.floor(Math.log10(lo)), b=Math.ceil(Math.log10(hi));
+  const span=b-a;
+  for(let p=a;p<=b;p++) for(const m of (span<=2?[1,2,5]:[1])){ const v=m*Math.pow(10,p); if(v>=lo*0.999&&v<=hi*1.001) t.push(v); }
+  return t;
+}
+function fmtLog(v){ if(v>=1e6) return (v/1e6)+'M'; if(v>=1e3) return (v/1e3)+'k'; return String(+v.toPrecision(3)); }
+
+/* ---------- svg helpers ---------- */
+function el(tag, attrs, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, attrs={}){ const t=el('text',Object.assign({x,y},attrs),parent); t.textContent=s; return t; }
+function makeTip(box){ let t=box.querySelector('.tip'); if(!t){ t=document.createElement('div'); t.className='tip'; t.hidden=true; box.appendChild(t);} return t; }
+function placeTip(tip, box, x, y){
+  tip.hidden=false;
+  const bw=box.clientWidth, tw=tip.offsetWidth, th=tip.offsetHeight;
+  let left=x+14; if(left+tw>bw) left=x-tw-14; if(left<0) left=Math.max(0,bw-tw);
+  let top=y-th/2; if(top<0) top=0;
+  tip.style.left=left+'px'; tip.style.top=top+'px';
+}
+function tipRow(color, label, value, box){ return `<div class="r"><div class="l"><i class="sw" style="background:${color}${box?';border-radius:2px':''}"></i><span>${label}</span></div><b>${value}</b></div>`; }
+function legendHTML(items, kind){ return '<div class="legend">'+items.map(i=>`<span><i class="${kind||''}" style="background:${i.color}"></i>${i.name}</span>`).join('')+'</div>'; }
+
+/* ---------- line chart ---------- */
+function lineChart(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const W=Math.max(260, box.clientWidth), H=cfg.height||340;
+  const endLab = cfg.series.length<=4 && W>480 && !cfg.noEndLabels;
+  const m={t:12,r:endLab?118:16,b:26,l:54};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':cfg.aria||'Line chart'},box);
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  let lo=Infinity, hi=-Infinity, tMin=NY, tMax=-1;
+  cfg.series.forEach(s=>s.values.forEach((v,t)=>{ if(v!=null&&isFinite(v)){ lo=Math.min(lo,v); hi=Math.max(hi,v); tMin=Math.min(tMin,t); tMax=Math.max(tMax,t);} }));
+  if(tMax<0){ box.innerHTML='<div class="empty">No data for this combination.</div>'; return; }
+  if(cfg.zero!==false){ lo=Math.min(lo,0); hi=Math.max(hi,0); }
+  if(cfg.ref!=null){ lo=Math.min(lo,cfg.ref); hi=Math.max(hi,cfg.ref); }
+  const pad=(hi-lo)*0.04||1; if(lo!==0) lo-=pad; hi+=pad;
+  const nt=niceTicks(lo,hi,ih<200?4:5);
+  const x=t=>m.l+(tMax===tMin?iw/2:(t-tMin)/(tMax-tMin)*iw);
+  const y=v=>m.t+ih-(v-nt.lo)/(nt.hi-nt.lo)*ih;
+  const g=el('g',{},svg);
+  nt.ticks.forEach(v=>{ el('line',{x1:m.l,x2:m.l+iw,y1:y(v),y2:y(v),stroke:'var(--grid)','stroke-width':1},g); txt(g,m.l-6,y(v)+4,fmtTick(v,nt.step),{'text-anchor':'end',class:'num'}); });
+  if(cfg.ref!=null) el('line',{x1:m.l,x2:m.l+iw,y1:y(cfg.ref),y2:y(cfg.ref),stroke:'var(--ink-3)','stroke-width':1},g);
+  else if(nt.lo<=0&&nt.hi>=0) el('line',{x1:m.l,x2:m.l+iw,y1:y(0),y2:y(0),stroke:'var(--ink-3)','stroke-width':1},g);
+  for(let t=tMin;t<=tMax;t++){ const yr=Y[t]; if(yr%5===0 || t===tMax && (yr%5>=2)) { txt(g,x(t),H-8,String(yr),{'text-anchor':'middle',class:'num'}); el('line',{x1:x(t),x2:x(t),y1:m.t+ih,y2:m.t+ih+4,stroke:'var(--ink-3)'},g);} }
+  if(cfg.band){ // shaded region between two series
+    const [a,b]=cfg.band; let d='';
+    const pts=[]; for(let t=tMin;t<=tMax;t++) if(a.values[t]!=null&&b.values[t]!=null) pts.push(t);
+    if(pts.length>1){ d='M'+pts.map(t=>x(t)+','+y(a.values[t])).join('L')+'L'+pts.slice().reverse().map(t=>x(t)+','+y(b.values[t])).join('L')+'Z'; el('path',{d,fill:'var(--gap-fill)',stroke:'none'},g); }
+  }
+  const labels=[];
+  cfg.series.forEach(s=>{
+    const pf = s.proj!=null?Y.indexOf(s.proj):NY; const pfi = pf<0?NY:pf;
+    let solid='', dotted='';
+    for(let t=tMin;t<=tMax;t++){
+      const v=s.values[t], pv=t>tMin?s.values[t-1]:null; if(v==null) continue;
+      const P=x(t).toFixed(1)+','+y(v).toFixed(1);
+      if(t>=pfi){ if(pv!=null) dotted+='M'+x(t-1).toFixed(1)+','+y(pv).toFixed(1)+'L'+P; }
+      else solid += (pv!=null&&t>tMin?'L':'M')+P;
+    }
+    const w=s.width||2;
+    if(solid) el('path',{d:solid,fill:'none',stroke:s.color,'stroke-width':w,'stroke-linejoin':'round','stroke-linecap':'round','stroke-dasharray':s.dash||''},g);
+    if(dotted) el('path',{d:dotted,fill:'none',stroke:s.color,'stroke-width':w,'stroke-dasharray':'1.5 4','stroke-linecap':'round'},g);
+    let lt=-1; for(let t=tMax;t>=tMin;t--) if(s.values[t]!=null){ lt=t; break; }
+    if(lt>=0){
+      const proj=lt>=pfi;
+      el('circle',{cx:x(lt),cy:y(s.values[lt]),r:3.5,fill:proj?'var(--surface)':s.color,stroke:s.color,'stroke-width':proj?1.8:0},g);
+      labels.push({y:y(s.values[lt]),x:x(lt),name:s.name,color:s.color,v:s.values[lt]});
+    }
+  });
+  if(endLab){
+    labels.sort((a,b)=>a.y-b.y);
+    for(let i=1;i<labels.length;i++) if(labels[i].y-labels[i-1].y<14) labels[i].y=labels[i-1].y+14;
+    const over=labels.length?labels[labels.length-1].y-(m.t+ih):0; if(over>0) labels.forEach(l=>l.y-=over);
+    labels.forEach(l=>{ const t=txt(g,m.l+iw+8,l.y+4,l.name.length>17?l.name.slice(0,16)+'…':l.name,{}); t.style.fill='var(--ink)'; t.style.fontSize='11.5px'; });
+  }
+  // hover
+  const tip=makeTip(box); const hl=el('g',{},svg);
+  const ov=el('rect',{x:m.l,y:m.t,width:iw,height:ih,fill:'transparent'},svg);
+  function move(ev){
+    const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)*W/r.width;
+    let t=Math.round(tMin+(sx-m.l)/iw*(tMax-tMin)); t=Math.max(tMin,Math.min(tMax,t));
+    hl.innerHTML=''; el('line',{x1:x(t),x2:x(t),y1:m.t,y2:m.t+ih,stroke:'var(--ink-3)','stroke-width':1,'stroke-dasharray':'2 3'},hl);
+    const rows=cfg.series.map(s=>({s,v:s.values[t]})).filter(o=>o.v!=null).sort((a,b)=>b.v-a.v);
+    rows.forEach(o=>el('circle',{cx:x(t),cy:y(o.v),r:4,fill:o.s.color,stroke:'var(--surface)','stroke-width':2},hl));
+    const anyProj=rows.some(o=>o.s.proj!=null&&Y[t]>=o.s.proj);
+    tip.innerHTML=`<div class="t">${Y[t]}${anyProj?' · projected':''}</div>`+rows.map(o=>tipRow(o.s.color,o.s.name,fmt(o.v))).join('')+(cfg.unit?`<div class="note">${cfg.unit}</div>`:'');
+    placeTip(tip, box, x(t)*r.width/W, (m.t+ih/3)*r.height/H);
+  }
+  ov.addEventListener('pointermove',move); ov.addEventListener('pointerdown',move);
+  ov.addEventListener('pointerleave',()=>{ hl.innerHTML=''; tip.hidden=true; });
+}
+
+/* ---------- stacked area ---------- */
+function stackedArea(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const W=Math.max(260,box.clientWidth), H=cfg.height||340, m={t:12,r:16,b:26,l:54};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const L=cfg.layers;
+  let tMax=-1; for(let t=0;t<NY;t++) if(L.every(l=>l.values[t]!=null)) tMax=t;
+  if(tMax<0){ box.innerHTML='<div class="empty">No data for this combination.</div>'; return; }
+  const tot=[]; for(let t=0;t<=tMax;t++) tot.push(L.reduce((s,l)=>s+Math.max(0,l.values[t]),0));
+  const val=(l,t)=>{ const v=Math.max(0,l.values[t]); return cfg.percent?(tot[t]?v/tot[t]*100:0):v; };
+  const hi=cfg.percent?100:Math.max(...tot)*1.04; const nt=niceTicks(0,hi,5); if(cfg.percent){nt.lo=0;nt.hi=100;nt.ticks=[0,20,40,60,80,100];nt.step=20;}
+  const x=t=>m.l+t/tMax*iw, y=v=>m.t+ih-(v-nt.lo)/(nt.hi-nt.lo)*ih;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':cfg.aria||'Stacked area chart'},box);
+  const g=el('g',{},svg);
+  nt.ticks.forEach(v=>{ el('line',{x1:m.l,x2:m.l+iw,y1:y(v),y2:y(v),stroke:'var(--grid)'},g); txt(g,m.l-6,y(v)+4,fmtTick(v,nt.step)+(cfg.percent?'%':''),{'text-anchor':'end',class:'num'}); });
+  for(let t=0;t<=tMax;t++) if(Y[t]%5===0){ txt(g,x(t),H-8,String(Y[t]),{'text-anchor':'middle',class:'num'}); }
+  const base=new Array(tMax+1).fill(0);
+  L.forEach(l=>{
+    const top=base.map((b,t)=>b+val(l,t));
+    const d='M'+top.map((v,t)=>x(t)+','+y(v)).join('L')+'L'+base.map((v,t)=>[t,v]).reverse().map(([t,v])=>x(t)+','+y(v)).join('L')+'Z';
+    el('path',{d,fill:l.color,stroke:'var(--surface)','stroke-width':1.5,'stroke-linejoin':'round'},g);
+    for(let t=0;t<=tMax;t++) base[t]=top[t];
+  });
+  const pf = cfg.proj!=null?Y.indexOf(cfg.proj):-1;
+  if(pf>0 && pf<=tMax){ el('rect',{x:x(pf-1),y:m.t,width:x(tMax)-x(pf-1),height:ih,fill:'var(--surface)',opacity:.45},g); txt(g,x(tMax)-2,m.t+12,'projected',{'text-anchor':'end'}); }
+  const tip=makeTip(box), hl=el('g',{},svg), ov=el('rect',{x:m.l,y:m.t,width:iw,height:ih,fill:'transparent'},svg);
+  function move(ev){
+    const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)*W/r.width;
+    let t=Math.round((sx-m.l)/iw*tMax); t=Math.max(0,Math.min(tMax,t));
+    hl.innerHTML=''; el('line',{x1:x(t),x2:x(t),y1:m.t,y2:m.t+ih,stroke:'var(--ink)','stroke-width':1,'stroke-dasharray':'2 3'},hl);
+    tip.innerHTML=`<div class="t">${Y[t]}${pf>0&&t>=pf?' · projected':''}</div>`+L.slice().reverse().map(l=>tipRow(l.color,l.name,(cfg.percent?'':fmt(l.values[t])+' · ')+(tot[t]?fmt(Math.max(0,l.values[t])/tot[t]*100,2)+'%':''),true)).join('')+(cfg.percent?'':`<div class="note">Total ${fmt(tot[t])} ${cfg.unit||''}</div>`);
+    placeTip(tip, box, x(t)*r.width/W, (m.t+ih/3)*r.height/H);
+  }
+  ov.addEventListener('pointermove',move); ov.addEventListener('pointerdown',move);
+  ov.addEventListener('pointerleave',()=>{ hl.innerHTML=''; tip.hidden=true; });
+}
+
+/* ---------- ranking bars ---------- */
+function rankBars(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const items=cfg.items.filter(i=>i.value!=null&&isFinite(i.value)).sort((a,b)=>b.value-a.value);
+  if(!items.length){ box.innerHTML='<div class="empty">No data for this year.</div>'; return; }
+  const W=Math.max(260,box.clientWidth), rh=17, narrow=W<520;
+  const lw=narrow?118:170, vw=62, m={t:22,r:vw,b:6,l:lw};
+  const H=m.t+items.length*rh+m.b, iw=W-m.l-m.r;
+  const lo=Math.min(0,...items.map(i=>i.value)), hiV=Math.max(0,...items.map(i=>i.value));
+  const nt=niceTicks(lo,hiV,narrow?3:5);
+  const x=v=>m.l+(v-nt.lo)/(nt.hi-nt.lo)*iw;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':'Ranking bar chart'},box);
+  const g=el('g',{},svg);
+  nt.ticks.forEach(v=>{ el('line',{x1:x(v),x2:x(v),y1:m.t-4,y2:H-m.b,stroke:'var(--grid)'},g); txt(g,x(v),m.t-8,fmtTick(v,nt.step),{'text-anchor':'middle',class:'num'}); });
+  const tip=makeTip(box);
+  items.forEach((it,i)=>{
+    const yy=m.t+i*rh, bh=rh-5;
+    const x0=x(Math.min(0,it.value)), x1=x(Math.max(0,it.value));
+    const r=Math.min(3,(x1-x0)/2);
+    el('rect',{x:x0,y:yy+2,width:Math.max(1,x1-x0),height:bh,rx:r,fill:it.color||'var(--muted-mark)'},g);
+    const lab=txt(g,m.l-8,yy+rh/2+4,(i+1)+'. '+(narrow&&it.name.length>15?it.name.slice(0,14)+'…':it.name),{'text-anchor':'end'});
+    if(it.color){ lab.style.fill='var(--ink)'; lab.style.fontWeight='600'; }
+    txt(g,x1+5,yy+rh/2+4,fmt(it.value),{class:'num'}).style.fill=it.color?'var(--ink)':'var(--ink-3)';
+    const hit=el('rect',{x:0,y:yy,width:W,height:rh,fill:'transparent'},g);
+    const show=ev=>{ const rr=svg.getBoundingClientRect(); tip.innerHTML=`<div class="t">${it.name}</div>`+tipRow(it.color||'var(--muted-mark)',`Rank ${i+1} of ${items.length}`,fmt(it.value),true)+`<div class="note">${cfg.unit}</div>`; placeTip(tip,box,(ev.clientX-rr.left),(yy+rh/2)*rr.height/H); };
+    hit.addEventListener('pointermove',show); hit.addEventListener('pointerdown',show);
+    hit.addEventListener('pointerleave',()=>tip.hidden=true);
+  });
+}
+
+/* ---------- scatter ---------- */
+function scatter(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const pts=cfg.points.filter(p=>p.x>0&&p.y>0);
+  if(!pts.length){ box.innerHTML='<div class="empty">No data for this combination.</div>'; return; }
+  const W=Math.max(260,box.clientWidth), H=cfg.height||440, m={t:14,r:20,b:40,l:58};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const allX=pts.map(p=>p.x).concat(...pts.map(p=>(p.trail||[]).map(q=>q[0]))).filter(v=>v>0);
+  const allY=pts.map(p=>p.y).concat(...pts.map(p=>(p.trail||[]).map(q=>q[1]))).filter(v=>v>0);
+  const xl=Math.min(...allX)/1.25, xh=Math.max(...allX)*1.25, yl=Math.min(...allY)/1.3, yh=Math.max(...allY)*1.3;
+  const x=v=>m.l+(Math.log(v)-Math.log(xl))/(Math.log(xh)-Math.log(xl))*iw;
+  const y=v=>m.t+ih-(Math.log(v)-Math.log(yl))/(Math.log(yh)-Math.log(yl))*ih;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':'Scatter plot'},box);
+  const g=el('g',{},svg);
+  logTicks(xl,xh).forEach(v=>{ el('line',{x1:x(v),x2:x(v),y1:m.t,y2:m.t+ih,stroke:'var(--grid)'},g); txt(g,x(v),m.t+ih+16,fmtLog(v),{'text-anchor':'middle',class:'num'}); });
+  logTicks(yl,yh).forEach(v=>{ el('line',{x1:m.l,x2:m.l+iw,y1:y(v),y2:y(v),stroke:'var(--grid)'},g); txt(g,m.l-6,y(v)+4,fmtLog(v),{'text-anchor':'end',class:'num'}); });
+  txt(g,m.l+iw,H-6,cfg.xLabel,{'text-anchor':'end'});
+  const yt=txt(g,14,m.t+ih/2,cfg.yLabel,{'text-anchor':'middle',transform:`rotate(-90 14 ${m.t+ih/2})`});
+  const maxPop=Math.max(...pts.map(p=>p.pop||1));
+  const rad=p=>3+Math.sqrt((p.pop||0)/maxPop)*20;
+  pts.filter(p=>p.trail&&p.trail.length>1).forEach(p=>{
+    el('path',{d:'M'+p.trail.filter(q=>q[0]>0&&q[1]>0).map(q=>x(q[0]).toFixed(1)+','+y(q[1]).toFixed(1)).join('L'),fill:'none',stroke:p.color,'stroke-width':1.6,opacity:.7,'stroke-linejoin':'round'},g);
+  });
+  const order=pts.slice().sort((a,b)=>(a.color?1:0)-(b.color?1:0)||(b.pop||0)-(a.pop||0));
+  const tip=makeTip(box);
+  order.forEach(p=>{
+    const c=el('circle',{cx:x(p.x),cy:y(p.y),r:rad(p),fill:p.color||'var(--muted-mark)','fill-opacity':p.color?.85:.55,stroke:'var(--surface)','stroke-width':1.5},g);
+    const show=ev=>{ const rr=svg.getBoundingClientRect(); tip.innerHTML=`<div class="t">${p.name}</div>`+tipRow(p.color||'var(--muted-mark)',cfg.xShort,fmt(p.x),true)+tipRow(p.color||'var(--muted-mark)',cfg.yShort,fmt(p.y),true)+`<div class="note">Population ${fmt(p.pop/1e6)} million</div>`; placeTip(tip,box,ev.clientX-rr.left,ev.clientY-rr.top); };
+    c.addEventListener('pointermove',show); c.addEventListener('pointerdown',show); c.addEventListener('pointerleave',()=>tip.hidden=true);
+  });
+  order.filter(p=>p.color).forEach(p=>{ const t=txt(g,x(p.x)+rad(p)+4,y(p.y)+4,p.name); t.style.fill='var(--ink)'; t.style.fontWeight='600'; t.style.pointerEvents='none'; t.style.paintOrder='stroke'; t.style.stroke='var(--surface)'; t.style.strokeWidth='3px'; });
+}
+
+/* ---------- 100% stacked bars ---------- */
+function shareBars(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const rows=cfg.rows.filter(r=>r.parts.every(v=>v!=null));
+  if(!rows.length){ box.innerHTML='<div class="empty">No data for this year.</div>'; return; }
+  const W=Math.max(260,box.clientWidth), rh=30, lw=W<520?96:150, m={t:6,r:10,b:22,l:lw};
+  const H=m.t+rows.length*rh+m.b, iw=W-m.l-m.r;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':'Share bars'},box);
+  const g=el('g',{},svg), tip=makeTip(box);
+  [0,25,50,75,100].forEach(v=>{ const xx=m.l+v/100*iw; el('line',{x1:xx,x2:xx,y1:m.t,y2:H-m.b,stroke:'var(--grid)'},g); txt(g,xx,H-6,v+'%',{'text-anchor':'middle',class:'num'}); });
+  rows.forEach((r,i)=>{
+    const yy=m.t+i*rh+5, bh=rh-10, tot=r.parts.reduce((s,v)=>s+Math.max(0,v),0);
+    const lab=txt(g,m.l-8,yy+bh/2+4,r.name.length>(W<520?12:20)?r.name.slice(0,(W<520?11:19))+'…':r.name,{'text-anchor':'end'}); lab.style.fill='var(--ink)';
+    let acc=0;
+    r.parts.forEach((v,j)=>{
+      const w=tot?Math.max(0,v)/tot*iw:0; const xx=m.l+acc; acc+=w;
+      const rc=el('rect',{x:xx,y:yy,width:Math.max(0,w-2),height:bh,rx:2,fill:cfg.colors[j]},g);
+      const show=ev=>{ const rr=svg.getBoundingClientRect(); tip.innerHTML=`<div class="t">${r.name}</div>`+cfg.names.map((n,k)=>tipRow(cfg.colors[k],n,fmt(Math.max(0,r.parts[k])/tot*100,2)+'%',true)).reverse().join(''); placeTip(tip,box,ev.clientX-rr.left,(yy+bh/2)*rr.height/H); };
+      rc.addEventListener('pointermove',show); rc.addEventListener('pointerdown',show); rc.addEventListener('pointerleave',()=>tip.hidden=true);
+    });
+  });
+}
+
+/* ---------- sidebar ---------- */
+function renderChips(){
+  $('#chips').innerHTML = state.sel.length? state.sel.map(k=>`<span class="chip"><i class="sw" style="background:${colorOf(k)}"></i>${regName(k)}<button type="button" data-rm="${k}" aria-label="Remove ${regName(k)}">×</button></span>`).join('') : '<span class="hint">Pick up to eight regions below.</span>';
+  $('#selCount').textContent = `${state.sel.length} of ${SLOTS}`;
+}
+function regRow(key, name, code, extra){
+  const on=state.sel.includes(key);
+  return `<label class="reg" title="${extra||''}"><input type="checkbox" data-key="${key}" ${on?'checked':''}><span>${name}</span><span class="code">${code}</span></label>`;
+}
+function renderList(){
+  const q=($('#regSearch').value||'').trim().toLowerCase();
+  const match=(n,c)=>!q||n.toLowerCase().includes(q)||c.toLowerCase().includes(q);
+  let html='';
+  const sec=(title, rows)=>{ if(rows.length) html+=`<h3>${title}</h3>`+rows.join(''); };
+  sec('Economic groups', PRESETS.filter(g=>g.cat==='Economic groups'&&match(g.name,'')).map(g=>regRow(g.key,g.name,g.members.length,g.members.map(m=>NAMES[m]).join(', '))));
+  sec('Continental', PRESETS.filter(g=>g.cat==='Continental'&&match(g.name,'')).map(g=>regRow(g.key,g.name,g.members.length,g.members.map(m=>NAMES[m]).join(', '))));
+  sec('Your groups', CUSTOM.filter(g=>match(g.name,'')).map(g=>regRow(g.key,g.name,g.members.length,g.members.map(m=>NAMES[m]).join(', ')).replace('</label>',`<button class="del" type="button" data-delgrp="${g.key}" aria-label="Delete ${g.name}">×</button></label>`)));
+  sec('Countries', COUNTRIES.filter(c=>match(NAMES[c],c)).map(c=>regRow(c,NAMES[c],c)));
+  sec('Rest of world', ROW.filter(c=>match(NAMES[c],c)).map(c=>regRow(c,NAMES[c],c)));
+  $('#regList').innerHTML = html || '<p class="hint">No region matches that search.</p>';
+}
+$('#regList').addEventListener('change', e=>{
+  const k=e.target.dataset.key; if(!k) return;
+  if(e.target.checked){ if(!select(k)){ e.target.checked=false; flash('Eight regions is the maximum. Remove one first.'); return; } }
+  else deselect(k);
+  if(!state.sel.includes(state.focus) && e.target.checked) {}
+  refresh();
+});
+$('#regList').addEventListener('click', e=>{
+  const d=e.target.dataset.delgrp; if(!d) return; e.preventDefault();
+  deselect(d); CUSTOM=CUSTOM.filter(g=>g.key!==d); cache.delete(d); saveCustom(); if(state.focus===d) state.focus='G:EU27'; refresh();
+});
+$('#chips').addEventListener('click', e=>{ const k=e.target.dataset.rm; if(k){ deselect(k); refresh(); } });
+$('#regSearch').addEventListener('input', renderList);
+function flash(msg){ const h=$('#selCount'); h.textContent=msg; h.style.color='var(--s8)'; setTimeout(()=>{ h.style.color=''; renderChips(); },2600); }
+// group builder
+$('#openBuilder').addEventListener('click',()=>{
+  $('#builder').hidden=false; $('#openBuilder').hidden=true;
+  $('#grpMembers').innerHTML=COUNTRIES.concat(ROW).map(c=>`<label><input type="checkbox" id="gm-${c}" value="${c}">${NAMES[c]}</label>`).join('');
+  $('#grpName').value=''; $('#grpMsg').textContent=''; $('#grpName').focus();
+});
+$('#cancelGrp').addEventListener('click',()=>{ $('#builder').hidden=true; $('#openBuilder').hidden=false; });
+$('#saveGrp').addEventListener('click',()=>{
+  const name=$('#grpName').value.trim(); const mem=[...$('#grpMembers').querySelectorAll('input:checked')].map(i=>i.value);
+  if(!name){ $('#grpMsg').textContent='Give the group a name.'; return; }
+  if(mem.length<2){ $('#grpMsg').textContent='Tick at least two regions.'; return; }
+  const key='C:'+Date.now().toString(36);
+  CUSTOM.push({key,name,members:mem}); saveCustom();
+  $('#builder').hidden=true; $('#openBuilder').hidden=false;
+  if(!select(key)) flash('Group saved. Remove a region to show it.');
+  refresh();
+});
+
+/* ---------- controls ---------- */
+function indSelect(id, value, ids){
+  const fams=[...new Set(IND.map(i=>i.fam))];
+  let o=`<select id="${id}">`;
+  fams.forEach(f=>{ const opts=IND.filter(i=>i.fam===f&&(!ids||ids.includes(i.id))); if(opts.length) o+=`<optgroup label="${f}">`+opts.map(i=>`<option value="${i.id}" ${i.id===value?'selected':''}>${i.label}</option>`).join('')+'</optgroup>'; });
+  return o+'</select>';
+}
+function seg(name, opts, value){ return `<div class="seg" role="group" data-seg="${name}">`+Object.entries(opts).map(([k,v])=>`<button type="button" data-v="${k}" aria-pressed="${k===value}">${v}</button>`).join('')+'</div>'; }
+function ctl(label, inner){ return `<label class="ctl"><span>${label}</span>${inner}</label>`; }
+function ctlDiv(label, inner){ return `<div class="ctl"><span>${label}</span>${inner}</div>`; }
+function yearCtl(max){ const yv=Math.min(state.year,max); return ctlDiv('Year',`<div class="yearbox"><input type="range" id="year" min="1995" max="${max}" step="1" value="${yv}" aria-label="Year"><output id="yearOut">${yv}</output><button class="btn" type="button" id="play" aria-label="Play through years">Play</button></div>`); }
+function focusCtl(){
+  const opts=[...state.sel];
+  if(!opts.includes(state.focus)) opts.unshift(state.focus);
+  const all=PRESETS.map(g=>g.key).concat(CUSTOM.map(g=>g.key),COUNTRIES,ROW);
+  return ctl('Region',`<select id="focus"><optgroup label="Selected">${opts.map(k=>`<option value="${k}" ${k===state.focus?'selected':''}>${regName(k)}</option>`).join('')}</optgroup><optgroup label="All">${all.filter(k=>!opts.includes(k)).map(k=>`<option value="${k}">${regName(k)}</option>`).join('')}</optgroup></select>`);
+}
+const TABS = {
+  trends:'Trends', gap:'Production vs consumption', groups:'Resource groups', flows:'Flows', rank:'Rankings', affluence:'Affluence', decouple:'Decoupling', comp:'Consumption categories', breakdown:'Breakdown'
+};
+function renderTabs(){
+  $('#tabs').innerHTML=Object.entries(TABS).map(([k,v])=>`<button role="tab" type="button" data-tab="${k}" aria-selected="${k===state.tab}">${v}</button>`).join('');
+}
+$('#tabs').addEventListener('click',e=>{ const t=e.target.dataset.tab; if(!t) return; state.tab=t; try{localStorage.setItem('exio-tab',t);}catch(_){} stopPlay(); refresh(); });
+
+function renderControls(){
+  const t=state.tab; let c='';
+  const accSeg = ctlDiv('Account', seg('acc',ACC,state.acc));
+  if(t==='trends'){ c=ctl('Indicator',indSelect('ind',state.ind))+accSeg+ctlDiv('Measure',seg('metric',METRIC,state.metric)); }
+  if(t==='gap'){ c=ctl('Indicator',indSelect('ind',state.ind))+ctlDiv('Measure',seg('metric',METRIC,state.metric)); }
+  if(t==='rank'){ const mm={abs:'Total',pc:'Per capita',gdp:'Per GDP (PPP)'}; if(state.metric==='idx') state.metric='pc'; c=ctl('Indicator',indSelect('ind',state.ind))+accSeg+ctlDiv('Measure',seg('metric',mm,state.metric))+ctlDiv('Compare',seg('rankSet',{countries:'Countries and RoW',groups:'Groups'},state.rankSet))+yearCtl(maxYear(state.ind, state.metric)); }
+  if(t==='affluence'){ c=ctl('Indicator',indSelect('ind',state.ind))+accSeg+yearCtl(2023)+ctlDiv('Paths',seg('trails',{on:'Show',off:'Hide'},state.trails?'on':'off')); }
+  if(t==='decouple'){ c=focusCtl()+ctl('Indicator',indSelect('ind',state.ind)); }
+  if(t==='comp'){ c=focusCtl()+ctl('Indicator',indSelect('compInd',state.compInd,COMP_INDS))+ctlDiv('Measure',seg('compMetric',{share:'Share',abs:'Total',pc:'Per capita'},state.compMetric))+yearCtl(2024); }
+  if(t==='groups'){ c=focusCtl()+ctl('Indicator',indSelect('rgInd',state.rgInd,COMP_INDS))+ctlDiv('View',seg('rgView',{PBA:'Where it occurs',CBA:'Footprint by origin'},state.rgView))+ctlDiv('Measure',seg('rgMetric',{abs:'Total',pc:'Per capita',share:'Share'},state.rgMetric))+yearCtl(2024); }
+  if(t==='flows'){ const ys=SK?SK.sankey_years:[1995,2005,2015,2024]; if(!ys.includes(state.skYear)) state.skYear=ys[ys.length-1]; c=focusCtl()+ctl('Indicator',indSelect('skInd',state.skInd,COMP_INDS))+ctlDiv('Year',seg('skYear',Object.fromEntries(ys.map(y=>[y,String(y)])),String(state.skYear))); }
+  if(t==='breakdown'){ c=focusCtl()+ctl('Indicator',`<select id="breakInd">${Object.entries(BREAK).map(([k,v])=>`<option value="${k}" ${k===state.breakInd?'selected':''}>${v.label}</option>`).join('')}</select>`)+ctlDiv('Account',seg('breakAcc',ACC,state.breakAcc))+ctlDiv('Measure',seg('breakMetric',{abs:'Total',pc:'Per capita',share:'Share'},state.breakMetric)); }
+  $('#controls').innerHTML=c;
+}
+function maxYear(indId, metric){
+  let mx=1995; const s=series('G:Global',indId,'CBA',metric==='idx'?'abs':metric);
+  s.forEach((v,t)=>{ if(v!=null) mx=Y[t]; }); return mx;
+}
+$('#controls').addEventListener('change',e=>{
+  const id=e.target.id;
+  if(id==='ind') state.ind=e.target.value;
+  if(id==='compInd') state.compInd=e.target.value;
+  if(id==='rgInd') state.rgInd=e.target.value;
+  if(id==='skInd') state.skInd=e.target.value;
+  if(id==='breakInd') state.breakInd=e.target.value;
+  if(id==='focus') state.focus=e.target.value;
+  if(id==='year') return;
+  refresh();
+});
+$('#controls').addEventListener('input',e=>{ if(e.target.id==='year'){ state.year=+e.target.value; $('#yearOut').textContent=state.year; renderView(); } });
+$('#controls').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.id==='play'){ togglePlay(); return; }
+  const s=b.parentElement.dataset.seg; if(!s) return;
+  const v=b.dataset.v;
+  if(s==='trails') state.trails=v==='on'; else if(s==='skYear') state.skYear=+v; else state[s]=v;
+  refresh();
+});
+let playTimer=null;
+function stopPlay(){ if(playTimer){ clearInterval(playTimer); playTimer=null; } const p=$('#play'); if(p) p.textContent='Play'; }
+function togglePlay(){
+  if(playTimer){ stopPlay(); return; }
+  const r=$('#year'); const max=+r.max;
+  if(state.year>=max) state.year=1995;
+  $('#play').textContent='Pause';
+  playTimer=setInterval(()=>{ state.year++; if(state.year>max){ state.year=max; stopPlay(); } const rr=$('#year'); if(rr){ rr.value=state.year; $('#yearOut').textContent=state.year; } renderView(); }, 420);
+}
+
+/* ---------- views ---------- */
+const view=$('#view');
+function panel(title, sub, id, extra){ return `<div class="panel"><h2>${title}</h2>${sub?`<p class="sub">${sub}</p>`:''}${extra||''}<div id="${id}"></div></div>`; }
+function projNote(ind){
+  const bits=[];
+  if(ind.cf) bits.push(`material extraction is carried forward from ${ind.cf}, drawn dotted`);
+  else if(ind.proj===2023) bits.push('employment for 2023-2024 is filled upstream, drawn dotted');
+  else if(ind.fam==='Land') bits.push('land accounts end in 2023');
+  else bits.push('2024 rests on a projected table, drawn dotted');
+  return bits.join('; ');
+}
+function selSeries(indId, acc, metric){
+  const ind=indOf(indId);
+  return state.sel.map(k=>({key:k,name:regName(k),color:colorOf(k),values:series(k,indId,acc,metric),proj:projFrom(ind)}));
+}
+function groupImpNote(){ return state.sel.some(isGroup)?' For groups, imports embodied are the sum of member imports, so they include trade between members.':''; }
+
+function viewTrends(){
+  const ind=indOf(state.ind), S=selSeries(state.ind,state.acc,state.metric);
+  const unit=unitOf(state.ind,state.metric);
+  view.innerHTML=panel(`${ind.label}, ${ACC_LONG[state.acc]}`, `${METRIC[state.metric]} · ${unit}`, 'c1', legendHTML(S))+
+    `<div class="notes"><p>Hover for values. Solid lines are built years; ${projNote(ind)}. Per-capita and per-GDP measures end in 2023 because population and GDP PPP are not available for 2024.${state.acc==='imp'?groupImpNote():''}</p>
+    <p><button class="btn" type="button" id="tblBtn">${state.showTable?'Hide':'Show'} data table</button></p></div><div class="panel tablewrap" id="tbl" ${state.showTable?'':'hidden'}></div>`;
+  if(!S.length){ $('#c1').innerHTML='<div class="empty">Select at least one region.</div>'; return; }
+  lineChart($('#c1'),{series:S,unit,height:380,zero:state.metric!=='idx',ref:state.metric==='idx'?100:null});
+  $('#tblBtn').onclick=()=>{ state.showTable=!state.showTable; viewTrends(); };
+  if(state.showTable){
+    const idx=Y.map((y,t)=>t).filter(t=>S.some(s=>s.values[t]!=null));
+    $('#tbl').innerHTML=`<table class="data"><thead><tr><th>Region (${unit})</th>${idx.map(t=>`<th>${Y[t]}</th>`).join('')}</tr></thead><tbody>${S.map(s=>`<tr><td>${s.name}</td>${idx.map(t=>`<td>${fmt(s.values[t])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  }
+}
+function viewGap(){
+  const ind=indOf(state.ind), unit=unitOf(state.ind,state.metric);
+  const pc='var(--s2)', cc='var(--s1)';
+  let cells=state.sel.map((k,i)=>`<div class="cell"><h3><i class="sw" style="background:${colorOf(k)}"></i>${regName(k)}</h3><div id="m${i}"></div></div>`).join('');
+  view.innerHTML=`<div class="panel"><h2>${ind.label}: production and consumption</h2><p class="sub">${METRIC[state.metric]} · ${unit}</p>${legendHTML([{name:'Consumption-based (CBA)',color:cc},{name:'Production-based (PBA)',color:pc}])}<div class="multiples">${cells||'<div class="empty">Select at least one region.</div>'}</div></div>`+
+    panel('Consumption relative to production','100 × (CBA / PBA - 1), %. Above zero the region consumes more than it produces, a net importer of the pressure.','c2',legendHTML(state.sel.map(k=>({name:regName(k),color:colorOf(k)}))))+
+    `<div class="notes"><p>The shaded band is the gap between the two accounts. ${projNote(ind)}.</p></div>`;
+  state.sel.forEach((k,i)=>{
+    const P=series(k,state.ind,'PBA',state.metric), C=series(k,state.ind,'CBA',state.metric);
+    const a={name:'CBA',color:cc,values:C,proj:projFrom(ind)}, b={name:'PBA',color:pc,values:P,proj:projFrom(ind)};
+    lineChart($('#m'+i),{series:[a,b],band:[a,b],unit,height:200,zero:state.metric!=='idx',ref:state.metric==='idx'?100:null,noEndLabels:true});
+  });
+  const G=state.sel.map(k=>{ const P=region(k).values.PBA[state.ind], C=region(k).values.CBA[state.ind]; return {name:regName(k),color:colorOf(k),proj:projFrom(ind),values:P.map((p,t)=>(p&&C[t]!=null)?100*(C[t]/p-1):null)}; });
+  if(G.length) lineChart($('#c2'),{series:G,unit:'% difference, CBA vs PBA',height:320,zero:true,ref:0});
+}
+function viewRank(){
+  const ind=indOf(state.ind), mx=maxYear(state.ind,state.metric); const yr=Math.min(state.year,mx), t=Y.indexOf(yr);
+  const unit=unitOf(state.ind,state.metric);
+  const keys = state.rankSet==='countries'? COUNTRIES.concat(ROW) : PRESETS.map(g=>g.key).concat(CUSTOM.map(g=>g.key));
+  const items=keys.map(k=>({key:k,name:regName(k),value:series(k,state.ind,state.acc,state.metric)[t],color:state.sel.includes(k)?colorOf(k):null}));
+  const hidden = state.sel.filter(k=>!keys.includes(k));
+  view.innerHTML=panel(`${ind.label}, ${ACC_LONG[state.acc]}, ${yr}`,`${METRIC[state.metric]} · ${unit}. Selected regions are coloured.`,'c1')+
+   `<div class="notes"><p>${state.rankSet==='groups'?'Groups overlap (a country sits in an economic group and a continent), so this is a comparison, not a partition.':'Five rest-of-world regions sit alongside the 44 countries.'}${hidden.length?` Not in this list: ${hidden.map(regName).join(', ')}; switch Compare to see ${hidden.length>1?'them':'it'}.`:''}${yr>=projFrom(ind)?' This year is projected.':''}${state.acc==='imp'&&state.rankSet==='groups'?' Group imports include trade between members.':''}</p></div>`;
+  rankBars($('#c1'),{items,unit});
+}
+function viewAffluence(){
+  const ind=indOf(state.ind), yr=Math.min(state.year,2023), t=Y.indexOf(yr);
+  const keys=COUNTRIES.concat(ROW).concat(state.sel.filter(isGroup));
+  const pts=keys.map(k=>{
+    const R=region(k), pop=R.macro.population, gdp=R.macro.gdp_ppp, s=series(k,state.ind,state.acc,'pc');
+    const sel=state.sel.includes(k);
+    return {key:k,name:regName(k),x:pop[t]?gdp[t]/pop[t]:null,y:s[t],pop:pop[t],color:sel?colorOf(k):null,
+      trail:(sel&&state.trails)?Y.map((_,j)=>j).filter(j=>j<=t).map(j=>[pop[j]?gdp[j]/pop[j]:null,s[j]]).filter(q=>q[0]&&q[1]):null};
+  }).filter(p=>p.x&&p.y);
+  const unit=unitOf(state.ind,'pc');
+  view.innerHTML=panel(`${ind.label} per person against income, ${yr}`,`${ACC_LONG[state.acc]} · both axes logarithmic · circle area follows population`,'c1')+
+    `<div class="notes"><p>Grey circles are the 49 countries and rest-of-world regions; selected regions are coloured${state.trails?' and trace their path since 1995':''}. Press Play to animate. GDP PPP ends in 2023. Selected groups are plotted at their aggregate values.</p></div>`;
+  scatter($('#c1'),{points:pts,xLabel:'GDP PPP per person, $',yLabel:unit,xShort:'GDP PPP per person, $',yShort:unit,height:Math.min(520,Math.max(360,$('#view').clientWidth*0.55))});
+}
+function viewDecouple(){
+  const ind=indOf(state.ind), R=region(state.focus);
+  const idx=a=>a.map(v=>(v==null||!a[0])?null:v/a[0]*100);
+  const S=[
+    {name:'Real GDP',color:'var(--s1)',values:idx(R.macro.gdp_usd_constant)},
+    {name:'Population',color:'var(--s3)',values:idx(R.macro.population)},
+    {name:`${ind.label}, consumption`,color:'var(--s2)',values:idx(R.values.CBA[state.ind]),proj:projFrom(ind)},
+    {name:`${ind.label}, production`,color:'var(--s7)',values:idx(R.values.PBA[state.ind]),proj:projFrom(ind)},
+  ];
+  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label} against the economy`,'Index, 1995 = 100','c1',legendHTML(S))+
+    `<div class="notes"><p>Real GDP is constant-price USD. Where the pressure lines sit below real GDP the region is decoupling in relative terms; a falling pressure line is absolute decoupling. ${projNote(ind)}.</p></div>`;
+  lineChart($('#c1'),{series:S,unit:'1995 = 100',height:380,zero:false,ref:100,noEndLabels:true});
+}
+function viewComp(){
+  const ind=indOf(state.compInd), R=region(state.focus);
+  const colors=CATS.map((c,i)=>`var(--s${i+1})`), names=CATS.map(c=>CAT_LABEL[c]||c);
+  const mode=state.compMetric, unit=mode==='share'?'%':unitOf(state.compInd,mode);
+  const layers=CATS.map((c,i)=>({name:names[i],color:colors[i],values:scaleSeries(state.focus,state.compInd,(R.comp&&R.comp[state.compInd])?R.comp[state.compInd][c]:new Array(NY).fill(null),mode==='share'?'abs':mode)}));
+  const yr=state.year, t=Y.indexOf(yr);
+  const rows=state.sel.map(k=>{ const C=region(k).comp; return {name:regName(k),parts:CATS.map(c=>C&&C[state.compInd]?C[state.compInd][c][t]:null)}; });
+  const leg=legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box');
+  view.innerHTML=`<div class="twocol">`+panel(`${regName(state.focus)}: ${ind.label} footprint by consumption category`,mode==='share'?'Share of the consumption-based footprint, %':unit,'c1',leg)+
+    panel(`Selected regions, ${yr}`,'Share of the consumption-based footprint, %','c2',leg)+`</div>`+
+    `<div class="notes"><p>Final demand of the region (households, government and investment) is grouped by product purpose; "Other products" are those outside the six categories, and "Direct (households)" is what households emit or use themselves (fuel burnt at home and in cars, household water). The categories sum to the consumption footprint on the Trends tab. ${projNote(ind)}.</p></div>`;
+  stackedArea($('#c1'),{layers,percent:mode==='share',height:340,unit,proj:projFrom(ind)});
+  shareBars($('#c2'),{rows,colors,names});
+}
+function viewBreakdown(){
+  const B=BREAK[state.breakInd], ind=indOf(state.breakInd), R=region(state.focus), acc=state.breakAcc;
+  const metric = state.breakMetric==='share'?'abs':state.breakMetric;
+  const conv=id=>{ const f=ind[metric][0]; const raw=R.values[acc][id]; const den=metric==='pc'?R.macro.population:null; return raw.map((v,t)=>v==null?null:(den?(den[t]?v*f/den[t]:null):v*f)); };
+  const total=conv(state.breakInd), parts=B.parts.map(conv);
+  const rest=total.map((v,t)=>v==null?null:v-parts.reduce((s,p)=>s+(p[t]||0),0));
+  const layers=parts.map((p,i)=>({name:B.names[i],color:`var(--s${i+1})`,values:p}));
+  if(B.rest) layers.push({name:B.rest,color:'var(--muted-mark)',values:rest});
+  const unit=state.breakMetric==='share'?'%':unitOf(state.breakInd,metric);
+  view.innerHTML=panel(`${regName(state.focus)}: ${B.label.toLowerCase()}, ${ACC_LONG[acc]}`,state.breakMetric==='share'?'Share of total, %':`${unit}`,'c1',legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box'))+
+    `<div class="notes"><p>${B.rest?`The grey layer is the difference between the reported total and the itemised rows${state.breakInd==='Land - Total'?'; for land it includes forest':''}. `:'Non-combustion is total GHG minus fuel combustion, so it includes SF6, HFC, PFC and NF3. '}${projNote(ind)}.</p></div>`;
+  stackedArea($('#c1'),{layers,percent:state.breakMetric==='share',height:360,unit,proj:projFrom(ind)});
+}
+function viewGroups(){
+  const ind=indOf(state.rgInd), view_=state.rgView, mode=state.rgMetric;
+  const G=rgOf(state.focus, view_, state.rgInd);
+  const layers=GRP.map(g=>({name:GRP_LABEL[g],color:GRP_COLOR[g],values:scaleSeries(state.focus,state.rgInd,G[g],mode==='share'?'abs':mode)}));
+  const unit=mode==='share'?'%':unitOf(state.rgInd,mode);
+  const yr=state.year, t=Y.indexOf(yr);
+  const share=k=>{ const g=rgOf(k,view_,state.rgInd); const tot=GRP.reduce((s,x)=>s+(g[x][t]||0),0); return tot?EXTRACT.reduce((s,x)=>s+(g[x][t]||0),0)/tot*100:null; };
+  const rows=state.sel.map(k=>{ const g=rgOf(k,view_,state.rgInd); return {name:regName(k),parts:GRP.map(x=>g[x][t])}; });
+  const leg=legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box');
+  const vlabel=view_==='PBA'?'where it occurs (production)':'consumption footprint, by the stage it originates in';
+  const s0=share(state.focus);
+  view.innerHTML=`<div class="twocol">`+panel(`${regName(state.focus)}: ${ind.label} by resource group`,`${vlabel} · ${mode==='share'?'share, %':unit}`,'c1',leg+(s0!=null?`<p class="sub">In ${yr}, extraction and processing of biomass, fossil resources, metals and non-metallic minerals account for <b>${fmt(s0,2)}%</b>.</p>`:''))+
+    panel(`Selected regions, ${yr}`,`Share by resource group, %`,'c2',leg)+`</div>`+
+    `<div class="notes"><p>Sectors are grouped as in the Global Resources Outlook 2024 (UNEP IRP, Methodological Annex 2, Table A2.1): each resource group covers the extraction and processing sectors of that resource; everything else is the remaining economy. Impacts are counted in the sector where they occur, so electricity used in processing counts under the remaining economy. GRO's own shares include more of the supply chain and read higher for GHG. ${view_==='CBA'?'The footprint view traces the region\'s final demand back to the sector group, anywhere in the world, where each impact occurs. ':''}${projNote(ind)}.</p></div>`;
+  stackedArea($('#c1'),{layers,percent:mode==='share',height:360,unit,proj:projFrom(ind)});
+  shareBars($('#c2'),{rows,colors:GRP.map(g=>GRP_COLOR[g]),names:GRP.map(g=>GRP_LABEL[g])});
+}
+let SK=null, skLoading=null;
+function loadSankey(){ if(!skLoading) skLoading=fetch('/explorer-sankey.json').then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).then(j=>{ SK=j; return j; }); return skLoading; }
+function sankey(box, cfg){
+  box.innerHTML=''; box.classList.add('chart');
+  const W=Math.max(300,box.clientWidth), narrow=W<640, H=cfg.height||460;
+  const m={t:8,r:narrow?96:170,b:8,l:narrow?92:150}, nw=12, pad=8;
+  const cols=cfg.cols, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const colX=cols.map((c,i)=>m.l+i*(iw-nw)/(cols.length-1));
+  const val={}; cols.flat().forEach(n=>val[n.id]=0);
+  const inV={}, outV={};
+  cfg.links.forEach(l=>{ outV[l.s]=(outV[l.s]||0)+l.v; inV[l.t]=(inV[l.t]||0)+l.v; });
+  cols.flat().forEach(n=>val[n.id]=Math.max(inV[n.id]||0,outV[n.id]||0));
+  const live=cols.map(c=>c.filter(n=>val[n.id]>0));
+  const k=Math.min(...live.map(c=>(ih-pad*(c.length-1))/Math.max(1e-30,c.reduce((s,n)=>s+val[n.id],0))));
+  const pos={};
+  live.forEach((c,ci)=>{ let y=m.t; const used=c.reduce((s,n)=>s+val[n.id]*k,0)+pad*(c.length-1); y+= (ih-used)/2; c.forEach(n=>{ pos[n.id]={x:colX[ci],y0:y,y1:y+val[n.id]*k,n}; y+=val[n.id]*k+pad; }); });
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img','aria-label':cfg.aria||'Sankey diagram'},box);
+  const gl=el('g',{},svg), gn=el('g',{},svg), tip=makeTip(box);
+  const so={}, to={};
+  const order=cfg.links.filter(l=>pos[l.s]&&pos[l.t]).sort((a,b)=>pos[a.s].y0-pos[b.s].y0||pos[a.t].y0-pos[b.t].y0);
+  const byT=order.slice().sort((a,b)=>pos[a.t].y0-pos[b.t].y0||pos[a.s].y0-pos[b.s].y0);
+  byT.forEach(l=>{ const o=to[l.t]||0; l.ty0=pos[l.t].y0+o; l.ty1=l.ty0+l.v*k; to[l.t]=o+l.v*k; });
+  order.forEach(l=>{ const o=so[l.s]||0; l.sy0=pos[l.s].y0+o; l.sy1=l.sy0+l.v*k; so[l.s]=o+l.v*k;
+    const x0=pos[l.s].x+nw, x1=pos[l.t].x, xm=(x0+x1)/2;
+    const d=`M${x0},${l.sy0}C${xm},${l.sy0} ${xm},${l.ty0} ${x1},${l.ty0}L${x1},${l.ty1}C${xm},${l.ty1} ${xm},${l.sy1} ${x0},${l.sy1}Z`;
+    const p=el('path',{d,fill:l.color,'fill-opacity':.42,stroke:'none'},gl);
+    const show=ev=>{ p.setAttribute('fill-opacity',.75); const rr=svg.getBoundingClientRect(); tip.innerHTML=`<div class="t">${pos[l.s].n.name} → ${pos[l.t].n.name}</div>`+tipRow(l.color,fmt(l.v)+' '+cfg.unit,fmt(l.v/cfg.total*100,2)+'%',true); placeTip(tip,box,ev.clientX-rr.left,ev.clientY-rr.top); };
+    p.addEventListener('pointermove',show); p.addEventListener('pointerdown',show);
+    p.addEventListener('pointerleave',()=>{ p.setAttribute('fill-opacity',.42); tip.hidden=true; });
+  });
+  Object.values(pos).forEach((q,ix)=>{
+    const h=Math.max(1,q.y1-q.y0);
+    const r=el('rect',{x:q.x,y:q.y0,width:nw,height:h,rx:2,fill:q.n.color||'var(--ink-2)'},gn);
+    const ci=cols.findIndex(c=>c.includes(q.n)), last=ci===cols.length-1, first=ci===0;
+    const share=val[q.n.id]/cfg.total*100;
+    if(h>=9){
+      const tx=first?q.x-6:q.x+nw+6, anchor=first?'end':'start';
+      const lab=txt(gn,tx,(q.y0+q.y1)/2+4,(narrow&&q.n.name.length>13?q.n.name.slice(0,12)+'…':q.n.name)+(last||first?`  ${fmt(share,2)}%`:''),{'text-anchor':anchor});
+      lab.style.fill='var(--ink)'; lab.style.paintOrder='stroke'; lab.style.stroke='var(--surface)'; lab.style.strokeWidth='3px'; lab.style.pointerEvents='none';
+    }
+    const show=ev=>{ const rr=svg.getBoundingClientRect(); tip.innerHTML=`<div class="t">${q.n.name}</div>`+tipRow(q.n.color||'var(--ink-2)',fmt(val[q.n.id])+' '+cfg.unit,fmt(share,2)+'%',true); placeTip(tip,box,ev.clientX-rr.left,ev.clientY-rr.top); };
+    r.addEventListener('pointermove',show); r.addEventListener('pointerdown',show); r.addEventListener('pointerleave',()=>tip.hidden=true);
+  });
+}
+function viewFlows(){
+  if(!SK){
+    view.innerHTML='<div class="panel"><div class="empty">Loading flow data…</div></div>';
+    loadSankey().then(()=>{ if(state.tab==='flows'){ renderControls(); renderView(); } }).catch(()=>{ view.innerHTML='<div class="panel"><div class="empty">The flow data could not be loaded. Reload the page to try again.</div></div>'; });
+    return;
+  }
+  const ind=indOf(state.skInd), yr=String(state.skYear), mem=members(state.focus);
+  const n=SK.origins.length, ng=SK.groups.length-1, nc=SK.cats.length, len=n*ng*nc+1;
+  const acc=new Array(len).fill(0);
+  mem.forEach(m=>{ const a=SK.sankey[yr][state.skInd][m]; for(let i=0;i<len;i++) acc[i]+=a[i]||0; });
+  const f=ind.abs[0], unit=ind.abs[1];
+  const T=(o,g,c)=>acc[(o*ng+g)*nc+c]*f, hh=acc[len-1]*f;
+  const oName=o=>o===0?(isGroup(state.focus)?'Within member countries':'Domestic'):SK.origins[o];
+  const cols=[
+    SK.origins.map((o,i)=>({id:'o'+i,name:oName(i),color:'var(--ink-3)'})),
+    SK.groups.map(g=>({id:'g'+g,name:GRP_LABEL[g],color:GRP_COLOR[g]})),
+    SK.cats.concat(['Direct (households)']).map(c=>({id:'c'+c,name:CAT_LABEL[c]||c,color:'var(--ink-2)'}))
+  ];
+  const links=[];
+  for(let o=0;o<n;o++) for(let g=0;g<ng;g++){ let v=0; for(let c=0;c<nc;c++) v+=T(o,g,c); if(v>0) links.push({s:'o'+o,t:'g'+SK.groups[g],v,color:GRP_COLOR[SK.groups[g]]}); }
+  for(let g=0;g<ng;g++) for(let c=0;c<nc;c++){ let v=0; for(let o=0;o<n;o++) v+=T(o,g,c); if(v>0) links.push({s:'g'+SK.groups[g],t:'c'+SK.cats[c],v,color:GRP_COLOR[SK.groups[g]]}); }
+  if(hh>0){ links.push({s:'o0',t:'ghouseholds',v:hh,color:GRP_COLOR.households}); links.push({s:'ghouseholds',t:'cDirect (households)',v:hh,color:GRP_COLOR.households}); }
+  let total=hh; for(let i=0;i<len-1;i++) total+=acc[i]*f;
+  let domestic=hh; for(let g=0;g<ng;g++) for(let c=0;c<nc;c++) domestic+=T(0,g,c);
+  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label} footprint, ${yr}`,`Where the impact occurs → which resource stage → what final demand it serves · total ${fmt(total)} ${unit}`,'c1',
+      `<p class="sub">${fmt((1-domestic/total)*100,2)}% of this footprint occurs outside ${isGroup(state.focus)?'the member countries themselves':regName(state.focus)}.</p>`)+
+    `<div class="notes"><p>Each band is part of the consumption footprint: on the left, the region where the impact physically occurs (continents exclude the ${isGroup(state.focus)?'member countries':'region'} itself); in the middle, the resource group of the sector where it occurs (GRO 2024, Table A2.1); on the right, the final-demand product category it ends up in. Hover a band for its value and share. ${yr>=String(projFrom(ind))?'This year is projected. ':''}Flows are computed from the full multi-regional model for ${SK.sankey_years.join(', ')}.</p></div>`;
+  sankey($('#c1'),{cols,links,unit,total,height:Math.min(560,Math.max(380,view.clientWidth*0.5))});
+}
+function renderView(){
+  const t=state.tab;
+  ({trends:viewTrends,gap:viewGap,groups:viewGroups,flows:viewFlows,rank:viewRank,affluence:viewAffluence,decouple:viewDecouple,comp:viewComp,breakdown:viewBreakdown}[t]||viewTrends)();
+}
+function refresh(){ if(!TABS[state.tab]) state.tab='trends'; renderChips(); renderList(); renderTabs(); renderControls(); renderView(); }
+let rT, lastW=0; new ResizeObserver(en=>{ const w=Math.round(en[0].contentRect.width); if(w===lastW) return; lastW=w; clearTimeout(rT); rT=setTimeout(renderView,120); }).observe($('main'));
+refresh();
+})();
+</script>

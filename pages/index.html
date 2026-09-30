@@ -1,0 +1,97 @@
+<title>Resource footprints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#f3f5f4; --surface:#ffffff; --line:#dde2e1; --ink:#121a1c; --ink-2:#4c5659; --ink-3:#7f898b;
+  --accent:#0d5f58; --accent-soft:#dcefec;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --rest:#c3cbca;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","IBM Plex Sans","Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
+    --accent:#5cc3b6; --accent-soft:#1d3532;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
+  --accent:#5cc3b6; --accent-soft:#1d3532;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;margin:0}
+.wrap{padding-inline:20px;padding-block:28px 56px;max-width:1080px;margin:0 auto}
+@media (max-width:520px){.wrap{padding-inline:16px}}
+h1{font-family:var(--cond);font-weight:600;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 12px;text-wrap:balance}
+h2{font-family:var(--cond);font-weight:600;font-size:19px;margin:0 0 6px;text-wrap:balance}
+.lede{color:var(--ink-2);font-size:17px;max-width:66ch;margin:0 0 8px}
+.meta{font-family:var(--mono);font-size:13px;color:var(--ink-3);margin:0 0 26px}
+.doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:0 0 34px}
+.door{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;color:inherit;text-decoration:none}
+.door:hover{border-color:var(--accent)}
+.door:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.door p{margin:0;color:var(--ink-2);font-size:14px}
+.door .go{margin-top:auto;color:var(--accent);font-weight:600;font-size:14px}
+.stack{display:flex;height:14px;border-radius:3px;overflow:hidden;gap:2px}
+.stack i{display:block;height:100%}
+.bars{display:flex;align-items:flex-end;gap:3px;height:38px}
+.bars i{display:block;flex:1;border-radius:2px 2px 0 0}
+section{margin:0 0 28px;max-width:78ch}
+section p,section li{color:var(--ink-2);font-size:14px}
+section ul{padding-left:18px;margin:6px 0 0}
+section li{margin:0 0 6px}
+a{color:var(--accent)}
+details summary{cursor:pointer;color:var(--accent);font-weight:500;font-size:14px}
+pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:10px 0 0;max-height:420px;overflow:auto}
+footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font-size:13px}
+</style>
+
+<div class="wrap">
+  <h1>Resource footprints</h1>
+  <p class="lede">Environmental and socio-economic footprints of 44 countries and five rest-of-world regions, 1995-2024, calculated with the EXIOBASE multi-regional input-output database.</p>
+  <p class="meta">EXIOBASE 3.11.3 · 49 regions · 22 indicators · production, consumption and import-embodied accounts</p>
+
+  <div class="doors">
+    <a class="door" href="/explorer">
+      <div class="stack" aria-hidden="true"><i style="flex:16;background:var(--s1)"></i><i style="flex:15;background:var(--s2)"></i><i style="flex:7;background:var(--s3)"></i><i style="flex:6;background:var(--s4)"></i><i style="flex:47;background:var(--rest)"></i><i style="flex:9;background:var(--s5)"></i></div>
+      <h2>Footprint explorer</h2>
+      <p>Greenhouse gases, energy, materials, land, water, water stress, biodiversity loss, PM health impacts, value added and employment, for any country or group of countries. Results are split by resource group (biomass, fossil resources, metals, non-metallic minerals) as in the Global Resources Outlook 2024, and traced through supply chains from where impacts occur to the final demand they serve.</p>
+      <span class="go">Open the explorer</span>
+    </a>
+    <a class="door" href="/coverage">
+      <div class="bars" aria-hidden="true"><i style="height:100%;background:var(--accent)"></i><i style="height:100%;background:var(--accent)"></i><i style="height:100%;background:var(--accent)"></i><i style="height:100%;background:var(--accent)"></i><i style="height:100%;background:var(--accent)"></i><i style="height:100%;background:var(--s4)"></i><i style="height:100%;background:var(--s4)"></i></div>
+      <h2>Data coverage by release</h2>
+      <p>For each EXIOBASE release from 3.8.2 to 3.12, which years of each account rest on reported data and which are projected, and which impact assessment methods are available.</p>
+      <span class="go">Compare releases</span>
+    </a>
+  </div>
+
+  <section aria-labelledby="notes">
+    <h2 id="notes">Notes on the data</h2>
+    <ul>
+      <li>Results use EXIOBASE 3.11.3, whose release is expected on 30 October 2026. They can change before then. Years after the last observed year of each account are projected and are drawn dotted in the charts.</li>
+      <li>Resource groups follow UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1. Impacts are counted in the sector where they occur, so electricity used to process materials counts under the remaining economy. The Global Resources Outlook attributes more of the supply chain to extraction and processing, and its shares for greenhouse gases are higher.</li>
+      <li>In EXIOBASE 3.11.2 and 3.11.3 the characterised row <code>GWP100 - AR6 - total non combustion</code> leaves out SF6, HFC, PFC and NF3, about 2% of global greenhouse gases; the total and combustion rows are complete. This site derives non-combustion emissions as the total minus combustion.</li>
+      <li>Country groups are sums of their member regions. For a group, imports embodied are the sum of member imports and include trade between members.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="licence">
+    <h2 id="licence">Data licence</h2>
+    <p>The results on this site are derived from EXIOBASE and are published with attribution to EXIOBASE, as section (b) of the EXIOBASE licence requires for derived results. EXIOBASE coefficients (such as direct or supply-chain multipliers and emission factors) and raw data from the EXIOBASE package are not published here.</p>
+    <p>EXIOBASE is released under a dual commercial and non-commercial licence. Non-commercial use by universities and non-profit research institutes, environmental and social NGOs, government bodies and publicly owned organisations is free under a customised derivative of the CC BY-NC-SA 4.0 licence. Any other use needs a commercial licence. Copyright: MSUT, IOTs and emission data &copy; 2024 XIO SA AS; material extensions &copy; 2024 Vienna University of Economics and Business (WU), released under CC BY-SA. Licence enquiries: exiobase-support@googlegroups.com.</p>
+    <details>
+      <summary>Full EXIOBASE licence text</summary>
+      <pre>__LICENCE__</pre>
+    </details>
+  </section>
+
+  <footer>Calculated by XIO Sustainability Analytics A/S from EXIOBASE. Known issues in published EXIOBASE releases are listed at <a href="https://github.com/EXIOBASE/exiobase-bugs-public/blob/main/KNOWN_ISSUES.md">github.com/EXIOBASE/exiobase-bugs-public</a>.</footer>
+</div>

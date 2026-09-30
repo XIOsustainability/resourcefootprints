@@ -1,0 +1,26 @@
+{
+  // Cloudflare Workers config for resourcefootprints.com: a static-assets Worker.
+  //
+  // Workers Builds runs `npx wrangler deploy` from the repo root on every push
+  // to main. `name` binds this config to the Worker created when the repo was
+  // imported in the dashboard; changing it creates a second Worker.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "resourcefootprints",
+  "compatibility_date": "2026-09-30",
+
+  // Declaring the custom domains here makes `wrangler deploy` create the DNS
+  // records and certificates. The zone must be in the same Cloudflare account.
+  "routes": [
+    { "pattern": "resourcefootprints.com", "custom_domain": true },
+    { "pattern": "www.resourcefootprints.com", "custom_domain": true }
+  ],
+
+  "assets": {
+    // Everything inside site/ ships; nothing outside it does.
+    "directory": "./site",
+    // Serve site/404.html on unmatched paths (Workers assets otherwise return an empty 404).
+    "not_found_handling": "404-page"
+    // Leave html_handling at its default: "none" disables directory-index
+    // resolution and "/" would 404 (found on vectorsustainability.com).
+  }
+}
