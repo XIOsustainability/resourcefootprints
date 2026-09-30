@@ -126,16 +126,18 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
 </style>
 
 <style>
-.rf-nav{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;padding:10px max(16px,calc((100% - 1500px) / 2 + 20px));border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav{border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav-in{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;max-width:var(--rf-w);margin:0 auto;padding:12px var(--rf-pad)}
 .rf-nav a{color:inherit;text-decoration:none;opacity:.78}
 .rf-nav a:hover,.rf-nav a[aria-current="page"]{opacity:1}
 .rf-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:4px}
 .rf-nav .rf-home{font-weight:600;opacity:1;margin-right:auto}
 .rf-nav a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media (max-width:520px){.rf-nav-in{padding:10px 16px}}
 </style>
 </head>
 <body>
-<nav class="rf-nav" aria-label="Site"><a class="rf-home" href="/">Resource footprints</a><a href="/explorer">Footprint explorer</a><a href="/coverage" aria-current="page">Data coverage</a></nav>
+<nav class="rf-nav" aria-label="Site" style="--rf-w:1060px;--rf-pad:0px;margin-bottom:28px"><div class="rf-nav-in"><a class="rf-home" href="/">Resource footprints</a><a href="/explorer">Footprint explorer</a><a href="/coverage" aria-current="page">Data coverage</a></div></nav>
 <div class="wrap">
   <header>
     <div class="eyebrow" id="eyebrow">EXIOBASE</div>

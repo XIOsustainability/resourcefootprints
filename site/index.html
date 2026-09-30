@@ -38,7 +38,7 @@
 :root{
   --ground:#f3f5f4; --surface:#ffffff; --line:#dde2e1; --ink:#121a1c; --ink-2:#4c5659; --ink-3:#7f898b;
   --accent:#0d5f58; --accent-soft:#dcefec;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --rest:#c3cbca;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --rest:#c3cbca; --grid:#e8ecea;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --cond:"IBM Plex Sans Condensed","IBM Plex Sans","Arial Narrow",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -48,28 +48,48 @@
     color-scheme:dark;
     --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
     --accent:#5cc3b6; --accent-soft:#1d3532;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --rest:#46504e; --grid:#262d2c;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
   --accent:#5cc3b6; --accent-soft:#1d3532;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --rest:#46504e; --grid:#262d2c;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;margin:0}
-.wrap{padding-inline:20px;padding-block:28px 56px;max-width:1080px;margin:0 auto}
-@media (max-width:520px){.wrap{padding-inline:16px}}
-h1{font-family:var(--cond);font-weight:600;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 12px;text-wrap:balance}
-h2{font-family:var(--cond);font-weight:600;font-size:19px;margin:0 0 6px;text-wrap:balance}
-.lede{color:var(--ink-2);font-size:17px;max-width:66ch;margin:0 0 8px}
-.pages{padding-left:18px;margin:0 0 30px;max-width:78ch}
-.pages li{margin:0 0 8px}
-section{margin:0 0 28px;max-width:78ch}
+.wrap{padding-inline:20px;padding-block:36px 56px;max-width:1120px;margin:0 auto}
+@media (max-width:520px){.wrap{padding-inline:16px;padding-block:24px 40px}}
+h1{font-family:var(--cond);font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 12px;text-wrap:balance}
+h2{font-family:var(--cond);font-weight:600;font-size:18px;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--ink-2);font-size:17px;max-width:62ch;margin:0 0 28px}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 16px}
+@media (max-width:960px){.figs{grid-template-columns:minmax(0,1fr)}}
+.fig{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px;color:inherit;text-decoration:none}
+.fig:hover{border-color:var(--accent)}
+.fig:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fig h2{font-size:15px;margin:0 0 12px}
+.fig svg{display:block;width:100%;height:auto}
+.fig p{margin:auto 0 0;padding-top:10px;color:var(--ink-3);font-size:12.5px;line-height:1.45}
+.fig .lab{font:12px var(--sans);fill:var(--ink-2)}
+.fig .num{font:11px var(--mono);fill:var(--ink-3)}
+.fig .grid{stroke:var(--grid);stroke-width:1}
+.leg{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:8px;font-size:12px;color:var(--ink-2)}
+.leg span{display:inline-flex;align-items:center;gap:5px}
+.leg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 40px}
+@media (max-width:720px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--accent)}
+.card h2{color:var(--accent);margin:0 0 4px}
+.card p{margin:0;color:var(--ink-2);font-size:14px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin:0 0 32px}
+@media (max-width:860px){.cols{grid-template-columns:minmax(0,1fr);gap:8px}}
 section p,section li{color:var(--ink-2);font-size:14px}
-section ul{padding-left:18px;margin:6px 0 0}
-section li{margin:0 0 6px}
+section ul{padding-left:18px;margin:0}
+section li{margin:0 0 8px}
+section p{margin:0 0 10px}
 a{color:var(--accent)}
 details summary{cursor:pointer;color:var(--accent);font-weight:500;font-size:14px}
 pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:10px 0 0;max-height:420px;overflow:auto}
@@ -77,25 +97,30 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
 </style>
 
 <style>
-.rf-nav{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;padding:10px max(16px,calc((100% - 1500px) / 2 + 20px));border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav{border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav-in{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;max-width:var(--rf-w);margin:0 auto;padding:12px var(--rf-pad)}
 .rf-nav a{color:inherit;text-decoration:none;opacity:.78}
 .rf-nav a:hover,.rf-nav a[aria-current="page"]{opacity:1}
 .rf-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:4px}
 .rf-nav .rf-home{font-weight:600;opacity:1;margin-right:auto}
 .rf-nav a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media (max-width:520px){.rf-nav-in{padding:10px 16px}}
 </style>
 </head>
 <body>
-<nav class="rf-nav" aria-label="Site"><a class="rf-home" href="/" aria-current="page">Resource footprints</a><a href="/explorer">Footprint explorer</a><a href="/coverage">Data coverage</a></nav>
+<nav class="rf-nav" aria-label="Site" style="--rf-w:1120px;--rf-pad:20px;margin-bottom:0"><div class="rf-nav-in"><a class="rf-home" href="/" aria-current="page">Resource footprints</a><a href="/explorer">Footprint explorer</a><a href="/coverage">Data coverage</a></div></nav>
 <div class="wrap">
   <h1>Resource footprints</h1>
   <p class="lede">Environmental and socio-economic footprints of 44 countries and 5 rest-of-world regions, 1995-2024, calculated with EXIOBASE 3.11.3.</p>
 
-  <ul class="pages">
-    <li><a href="/explorer">Footprint explorer</a>: production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group.</li>
-    <li><a href="/coverage">Data coverage</a>: observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.</li>
-  </ul>
+  <div class="figs"><a class="fig" href="/explorer"><h2>World GHG emissions by sector group, 2024</h2><svg viewBox="0 0 340 134" role="img" aria-label="World greenhouse gas emissions 2024 by sector group"><rect x="0.0" y="8" width="51.1" height="34" rx="3" fill="var(--s1)"/><rect x="53.1" y="8" width="49.0" height="34" rx="3" fill="var(--s2)"/><rect x="104.1" y="8" width="21.2" height="34" rx="3" fill="var(--s3)"/><rect x="127.3" y="8" width="18.1" height="34" rx="3" fill="var(--s4)"/><rect x="147.4" y="8" width="159.8" height="34" rx="3" fill="var(--rest)"/><rect x="309.3" y="8" width="28.7" height="34" rx="3" fill="var(--s5)"/><rect x="0" y="56" width="11" height="11" rx="2" fill="var(--s1)"/><text x="17" y="66" class="lab">Biomass <tspan class="num">16%</tspan></text><rect x="172" y="56" width="11" height="11" rx="2" fill="var(--s2)"/><text x="189" y="66" class="lab">Fossil resources <tspan class="num">15%</tspan></text><rect x="0" y="80" width="11" height="11" rx="2" fill="var(--s3)"/><text x="17" y="90" class="lab">Metals <tspan class="num">7%</tspan></text><rect x="172" y="80" width="11" height="11" rx="2" fill="var(--s4)"/><text x="189" y="90" class="lab">Non-metallic minerals <tspan class="num">6%</tspan></text><rect x="0" y="104" width="11" height="11" rx="2" fill="var(--rest)"/><text x="17" y="114" class="lab">Remaining economy <tspan class="num">48%</tspan></text><rect x="172" y="104" width="11" height="11" rx="2" fill="var(--s5)"/><text x="189" y="114" class="lab">Households (direct) <tspan class="num">9%</tspan></text></svg><p>49.9 Gt CO₂-eq, production-based. Sector groups as in the Global Resources Outlook 2024.</p></a><a class="fig" href="/explorer"><h2>Consumption-based GHG per person, 1995-2023</h2><svg viewBox="0 0 340 150" role="img" aria-label="Consumption-based GHG per person"><line x1="30" x2="248" y1="128.0" y2="128.0" class="grid"/><text x="24" y="132.0" class="num" text-anchor="end">0</text><line x1="30" x2="248" y1="98.0" y2="98.0" class="grid"/><text x="24" y="102.0" class="num" text-anchor="end">5</text><line x1="30" x2="248" y1="68.0" y2="68.0" class="grid"/><text x="24" y="72.0" class="num" text-anchor="end">10</text><line x1="30" x2="248" y1="38.0" y2="38.0" class="grid"/><text x="24" y="42.0" class="num" text-anchor="end">15</text><line x1="30" x2="248" y1="8.0" y2="8.0" class="grid"/><text x="24" y="12.0" class="num" text-anchor="end">20</text><text x="30.0" y="146" class="num" text-anchor="middle">1995</text><text x="248.0" y="146" class="num" text-anchor="middle">2023</text><polyline points="30.0,26.4 37.8,22.5 45.6,23.0 53.4,22.2 61.1,19.7 68.9,17.8 76.7,18.7 84.5,19.4 92.3,17.1 100.1,15.6 107.9,15.0 115.6,14.2 123.4,15.3 131.2,20.6 139.0,30.3 146.8,28.4 154.6,27.9 162.4,32.1 170.1,33.7 177.9,33.9 185.7,35.0 193.5,38.5 201.3,36.0 209.1,37.6 216.9,38.9 224.6,46.9 232.4,40.9 240.2,39.0 248.0,43.4" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/><circle cx="248.0" cy="43.4" r="3" fill="var(--s1)"/><text x="255.0" y="47.4" class="lab">Advanced <tspan class="num">14.1</tspan></text><polyline points="30.0,108.5 37.8,108.9 45.6,108.7 53.4,109.1 61.1,109.7 68.9,109.5 76.7,109.3 84.5,109.1 92.3,108.4 100.1,107.4 107.9,106.6 115.6,106.0 123.4,104.9 131.2,104.2 139.0,103.4 146.8,102.0 154.6,101.1 162.4,100.4 170.1,99.9 177.9,100.1 185.7,100.5 193.5,100.2 201.3,100.2 209.1,99.5 216.9,99.5 224.6,100.2 232.4,99.5 240.2,99.6 248.0,98.7" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"/><circle cx="248.0" cy="98.7" r="3" fill="var(--s2)"/><text x="255.0" y="102.7" class="lab">Emerging <tspan class="num">4.9</tspan></text></svg><p>t CO₂-eq per person. Advanced economies and emerging and developing economies (IMF groups).</p></a><a class="fig" href="/explorer"><h2>World material extraction by type, 1995-2024</h2><svg viewBox="0 0 340 150" role="img" aria-label="World material extraction by type"><line x1="30" x2="332" y1="128.0" y2="128.0" class="grid"/><text x="24" y="132.0" class="num" text-anchor="end">0</text><line x1="30" x2="332" y1="104.0" y2="104.0" class="grid"/><text x="24" y="108.0" class="num" text-anchor="end">25</text><line x1="30" x2="332" y1="80.0" y2="80.0" class="grid"/><text x="24" y="84.0" class="num" text-anchor="end">50</text><line x1="30" x2="332" y1="56.0" y2="56.0" class="grid"/><text x="24" y="60.0" class="num" text-anchor="end">75</text><line x1="30" x2="332" y1="32.0" y2="32.0" class="grid"/><text x="24" y="36.0" class="num" text-anchor="end">100</text><line x1="30" x2="332" y1="8.0" y2="8.0" class="grid"/><text x="24" y="12.0" class="num" text-anchor="end">125</text><polygon points="30.0,122.8 40.4,122.5 50.8,122.4 61.2,122.3 71.7,122.2 82.1,122.1 92.5,122.1 102.9,122.0 113.3,121.8 123.7,121.5 134.1,121.5 144.6,121.3 155.0,121.0 165.4,120.7 175.8,120.7 186.2,120.5 196.6,120.1 207.0,120.1 217.4,119.7 227.9,119.5 238.3,119.5 248.7,119.4 259.1,119.2 269.5,119.1 279.9,119.0 290.3,119.0 300.8,118.9 311.2,118.7 321.6,118.6 332.0,118.4 332.0,128.0 321.6,128.0 311.2,128.0 300.8,128.0 290.3,128.0 279.9,128.0 269.5,128.0 259.1,128.0 248.7,128.0 238.3,128.0 227.9,128.0 217.4,128.0 207.0,128.0 196.6,128.0 186.2,128.0 175.8,128.0 165.4,128.0 155.0,128.0 144.6,128.0 134.1,128.0 123.7,128.0 113.3,128.0 102.9,128.0 92.5,128.0 82.1,128.0 71.7,128.0 61.2,128.0 50.8,128.0 40.4,128.0 30.0,128.0" fill="var(--s1)" stroke="var(--surface)" stroke-width="1"/><polygon points="30.0,118.7 40.4,118.2 50.8,118.0 61.2,117.9 71.7,117.7 82.1,117.7 92.5,117.5 102.9,117.4 113.3,117.1 123.7,116.5 134.1,116.5 144.6,116.1 155.0,115.6 165.4,114.8 175.8,115.0 186.2,114.7 196.6,113.9 207.0,113.8 217.4,113.0 227.9,112.7 238.3,112.6 248.7,112.4 259.1,111.9 269.5,111.8 279.9,111.6 290.3,111.6 300.8,111.3 311.2,111.0 321.6,110.7 332.0,110.4 332.0,118.4 321.6,118.6 311.2,118.7 300.8,118.9 290.3,119.0 279.9,119.0 269.5,119.1 259.1,119.2 248.7,119.4 238.3,119.5 227.9,119.5 217.4,119.7 207.0,120.1 196.6,120.1 186.2,120.5 175.8,120.7 165.4,120.7 155.0,121.0 144.6,121.3 134.1,121.5 123.7,121.5 113.3,121.8 102.9,122.0 92.5,122.1 82.1,122.1 71.7,122.2 61.2,122.3 50.8,122.4 40.4,122.5 30.0,122.8" fill="var(--s3)" stroke="var(--surface)" stroke-width="1"/><polygon points="30.0,116.7 40.4,116.2 50.8,116.0 61.2,115.9 71.7,115.7 82.1,115.6 92.5,115.4 102.9,115.3 113.3,115.0 123.7,114.4 134.1,114.3 144.6,114.0 155.0,113.4 165.4,112.7 175.8,113.0 186.2,112.5 196.6,111.7 207.0,111.6 217.4,110.8 227.9,110.5 238.3,110.4 248.7,110.1 259.1,109.5 269.5,109.4 279.9,109.2 290.3,109.2 300.8,108.9 311.2,108.6 321.6,108.3 332.0,108.0 332.0,110.4 321.6,110.7 311.2,111.0 300.8,111.3 290.3,111.6 279.9,111.6 269.5,111.8 259.1,111.9 248.7,112.4 238.3,112.6 227.9,112.7 217.4,113.0 207.0,113.8 196.6,113.9 186.2,114.7 175.8,115.0 165.4,114.8 155.0,115.6 144.6,116.1 134.1,116.5 123.7,116.5 113.3,117.1 102.9,117.4 92.5,117.5 82.1,117.7 71.7,117.7 61.2,117.9 50.8,118.0 40.4,118.2 30.0,118.7" fill="var(--s6)" stroke="var(--surface)" stroke-width="1"/><polygon points="30.0,96.7 40.4,95.9 50.8,95.0 61.2,94.2 71.7,93.3 82.1,92.6 92.5,92.0 102.9,91.0 113.3,89.5 123.7,87.2 134.1,85.5 144.6,83.5 155.0,81.5 165.4,81.0 175.8,80.8 186.2,77.8 196.6,74.1 207.0,72.0 217.4,69.7 227.9,68.8 238.3,69.0 248.7,67.7 259.1,67.6 269.5,67.0 279.9,67.2 290.3,67.1 300.8,65.2 311.2,63.5 321.6,61.7 332.0,59.6 332.0,108.0 321.6,108.3 311.2,108.6 300.8,108.9 290.3,109.2 279.9,109.2 269.5,109.4 259.1,109.5 248.7,110.1 238.3,110.4 227.9,110.5 217.4,110.8 207.0,111.6 196.6,111.7 186.2,112.5 175.8,113.0 165.4,112.7 155.0,113.4 144.6,114.0 134.1,114.3 123.7,114.4 113.3,115.0 102.9,115.3 92.5,115.4 82.1,115.6 71.7,115.7 61.2,115.9 50.8,116.0 40.4,116.2 30.0,116.7" fill="var(--s4)" stroke="var(--surface)" stroke-width="1"/><polygon points="30.0,93.0 40.4,92.1 50.8,91.0 61.2,90.0 71.7,89.1 82.1,88.0 92.5,87.4 102.9,86.4 113.3,84.4 123.7,81.8 134.1,79.8 144.6,77.4 155.0,75.1 165.4,74.4 175.8,74.0 186.2,70.5 196.6,66.3 207.0,63.9 217.4,61.0 227.9,59.8 238.3,59.9 248.7,58.5 259.1,58.3 269.5,58.0 279.9,58.1 290.3,58.0 300.8,56.0 311.2,53.9 321.6,51.8 332.0,49.5 332.0,59.6 321.6,61.7 311.2,63.5 300.8,65.2 290.3,67.1 279.9,67.2 269.5,67.0 259.1,67.6 248.7,67.7 238.3,69.0 227.9,68.8 217.4,69.7 207.0,72.0 196.6,74.1 186.2,77.8 175.8,80.8 165.4,81.0 155.0,81.5 144.6,83.5 134.1,85.5 123.7,87.2 113.3,89.5 102.9,91.0 92.5,92.0 82.1,92.6 71.7,93.3 61.2,94.2 50.8,95.0 40.4,95.9 30.0,96.7" fill="var(--s2)" stroke="var(--surface)" stroke-width="1"/><polygon points="30.0,78.2 40.4,77.1 50.8,76.1 61.2,75.0 71.7,74.1 82.1,72.7 92.5,71.8 102.9,70.6 113.3,68.1 123.7,64.9 134.1,62.4 144.6,59.4 155.0,56.7 165.4,55.7 175.8,55.3 186.2,51.2 196.6,46.3 207.0,43.7 217.4,40.6 227.9,39.3 238.3,39.5 248.7,38.4 259.1,37.6 269.5,36.9 279.9,36.6 290.3,37.1 300.8,34.6 311.2,32.4 321.6,30.3 332.0,27.8 332.0,49.5 321.6,51.8 311.2,53.9 300.8,56.0 290.3,58.0 279.9,58.1 269.5,58.0 259.1,58.3 248.7,58.5 238.3,59.9 227.9,59.8 217.4,61.0 207.0,63.9 196.6,66.3 186.2,70.5 175.8,74.0 165.4,74.4 155.0,75.1 144.6,77.4 134.1,79.8 123.7,81.8 113.3,84.4 102.9,86.4 92.5,87.4 82.1,88.0 71.7,89.1 61.2,90.0 50.8,91.0 40.4,92.1 30.0,93.0" fill="var(--rest)" stroke="var(--surface)" stroke-width="1"/><rect x="300.8" y="8" width="31.2" height="120" fill="var(--surface)" opacity=".45"/><text x="30.0" y="146" class="num" text-anchor="start">1995</text><text x="332.0" y="146" class="num" text-anchor="end">2024</text></svg><div class="leg"><span><i style="background:var(--s1)"></i>Primary crops</span><span><i style="background:var(--s3)"></i>Crop residues</span><span><i style="background:var(--s6)"></i>Forestry</span><span><i style="background:var(--s4)"></i>Non-metallic minerals</span><span><i style="background:var(--s2)"></i>Metal ores</span><span><i style="background:var(--rest)"></i>Other, incl. fossil fuels and grazing</span></div><p>Gt per year. 104 Gt in 2024. Shaded: 2021-2024, carried forward.</p></a></div>
 
+  <div class="cards">
+    <a class="card" href="/explorer"><h2>Footprint explorer</h2><p>Production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group, 1995-2024.</p></a>
+    <a class="card" href="/coverage"><h2>Data coverage</h2><p>Observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.</p></a>
+  </div>
+
+  <div class="cols">
   <section aria-labelledby="notes">
     <h2 id="notes">Notes</h2>
     <ul>
@@ -152,6 +177,8 @@ Commercial licenses, which allow for use for any case not covered in the non-com
 The funding accumulated through any licensing and support is being used to fund updates to the database, and will result in more regular, reliable and precise updates benefiting everyone.</pre>
     </details>
   </section>
+
+  </div>
 
   <footer>XIO Sustainability Analytics A/S. EXIOBASE known issues: <a href="https://github.com/EXIOBASE/exiobase-bugs-public/blob/main/KNOWN_ISSUES.md">github.com/EXIOBASE/exiobase-bugs-public</a>.</footer>
 </div>

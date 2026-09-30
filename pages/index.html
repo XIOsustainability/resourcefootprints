@@ -6,7 +6,7 @@
 :root{
   --ground:#f3f5f4; --surface:#ffffff; --line:#dde2e1; --ink:#121a1c; --ink-2:#4c5659; --ink-3:#7f898b;
   --accent:#0d5f58; --accent-soft:#dcefec;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --rest:#c3cbca;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --rest:#c3cbca; --grid:#e8ecea;
   --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --cond:"IBM Plex Sans Condensed","IBM Plex Sans","Arial Narrow",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
@@ -16,28 +16,48 @@
     color-scheme:dark;
     --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
     --accent:#5cc3b6; --accent-soft:#1d3532;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --rest:#46504e; --grid:#262d2c;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#101413; --surface:#181d1c; --line:#2e3634; --ink:#eef3f2; --ink-2:#b4bfbd; --ink-3:#83908e;
   --accent:#5cc3b6; --accent-soft:#1d3532;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --rest:#46504e;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --rest:#46504e; --grid:#262d2c;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;margin:0}
-.wrap{padding-inline:20px;padding-block:28px 56px;max-width:1080px;margin:0 auto}
-@media (max-width:520px){.wrap{padding-inline:16px}}
-h1{font-family:var(--cond);font-weight:600;font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 12px;text-wrap:balance}
-h2{font-family:var(--cond);font-weight:600;font-size:19px;margin:0 0 6px;text-wrap:balance}
-.lede{color:var(--ink-2);font-size:17px;max-width:66ch;margin:0 0 8px}
-.pages{padding-left:18px;margin:0 0 30px;max-width:78ch}
-.pages li{margin:0 0 8px}
-section{margin:0 0 28px;max-width:78ch}
+.wrap{padding-inline:20px;padding-block:36px 56px;max-width:1120px;margin:0 auto}
+@media (max-width:520px){.wrap{padding-inline:16px;padding-block:24px 40px}}
+h1{font-family:var(--cond);font-weight:600;font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0 0 12px;text-wrap:balance}
+h2{font-family:var(--cond);font-weight:600;font-size:18px;margin:0 0 8px;text-wrap:balance}
+.lede{color:var(--ink-2);font-size:17px;max-width:62ch;margin:0 0 28px}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 16px}
+@media (max-width:960px){.figs{grid-template-columns:minmax(0,1fr)}}
+.fig{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px;color:inherit;text-decoration:none}
+.fig:hover{border-color:var(--accent)}
+.fig:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fig h2{font-size:15px;margin:0 0 12px}
+.fig svg{display:block;width:100%;height:auto}
+.fig p{margin:auto 0 0;padding-top:10px;color:var(--ink-3);font-size:12.5px;line-height:1.45}
+.fig .lab{font:12px var(--sans);fill:var(--ink-2)}
+.fig .num{font:11px var(--mono);fill:var(--ink-3)}
+.fig .grid{stroke:var(--grid);stroke-width:1}
+.leg{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:8px;font-size:12px;color:var(--ink-2)}
+.leg span{display:inline-flex;align-items:center;gap:5px}
+.leg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 40px}
+@media (max-width:720px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--accent)}
+.card h2{color:var(--accent);margin:0 0 4px}
+.card p{margin:0;color:var(--ink-2);font-size:14px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin:0 0 32px}
+@media (max-width:860px){.cols{grid-template-columns:minmax(0,1fr);gap:8px}}
 section p,section li{color:var(--ink-2);font-size:14px}
-section ul{padding-left:18px;margin:6px 0 0}
-section li{margin:0 0 6px}
+section ul{padding-left:18px;margin:0}
+section li{margin:0 0 8px}
+section p{margin:0 0 10px}
 a{color:var(--accent)}
 details summary{cursor:pointer;color:var(--accent);font-weight:500;font-size:14px}
 pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:10px 0 0;max-height:420px;overflow:auto}
@@ -48,11 +68,14 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
   <h1>Resource footprints</h1>
   <p class="lede">Environmental and socio-economic footprints of 44 countries and 5 rest-of-world regions, 1995-2024, calculated with EXIOBASE 3.11.3.</p>
 
-  <ul class="pages">
-    <li><a href="/explorer">Footprint explorer</a>: production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group.</li>
-    <li><a href="/coverage">Data coverage</a>: observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.</li>
-  </ul>
+  __FIGURES__
 
+  <div class="cards">
+    <a class="card" href="/explorer"><h2>Footprint explorer</h2><p>Production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group, 1995-2024.</p></a>
+    <a class="card" href="/coverage"><h2>Data coverage</h2><p>Observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.</p></a>
+  </div>
+
+  <div class="cols">
   <section aria-labelledby="notes">
     <h2 id="notes">Notes</h2>
     <ul>
@@ -72,6 +95,8 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
       <pre>__LICENCE__</pre>
     </details>
   </section>
+
+  </div>
 
   <footer>XIO Sustainability Analytics A/S. EXIOBASE known issues: <a href="https://github.com/EXIOBASE/exiobase-bugs-public/blob/main/KNOWN_ISSUES.md">github.com/EXIOBASE/exiobase-bugs-public</a>.</footer>
 </div>

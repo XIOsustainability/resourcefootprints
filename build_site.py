@@ -63,13 +63,17 @@ PAGES = {
                    "dateModified": TODAY}]),
 }
 NAV_CSS = """<style>
-.rf-nav{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;padding:10px max(16px,calc((100% - 1500px) / 2 + 20px));border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav{border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.rf-nav-in{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;max-width:var(--rf-w);margin:0 auto;padding:12px var(--rf-pad)}
 .rf-nav a{color:inherit;text-decoration:none;opacity:.78}
 .rf-nav a:hover,.rf-nav a[aria-current="page"]{opacity:1}
 .rf-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:4px}
 .rf-nav .rf-home{font-weight:600;opacity:1;margin-right:auto}
 .rf-nav a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media (max-width:520px){.rf-nav-in{padding:10px 16px}}
 </style>"""
+# content column of each page, so the nav lines up with it: (max-width incl. padding, side padding, space below)
+NAV_FRAME = {"index": ("1120px", "20px", "0"), "explorer": ("1500px", "20px", "0"), "coverage": ("1060px", "0px", "28px")}
 
 
 def nav(current):
@@ -77,7 +81,9 @@ def nav(current):
     cur = ' aria-current="page"'
     items = "".join(f'<a href="{h}"{cur if k == current else ""}>{n}</a>' for h, n, k in links)
     home = cur if current == "index" else ""
-    return f'<nav class="rf-nav" aria-label="Site"><a class="rf-home" href="/"{home}>Resource footprints</a>{items}</nav>\n'
+    w, pad, gap = NAV_FRAME[current]
+    return (f'<nav class="rf-nav" aria-label="Site" style="--rf-w:{w};--rf-pad:{pad};margin-bottom:{gap}">'
+            f'<div class="rf-nav-in"><a class="rf-home" href="/"{home}>Resource footprints</a>{items}</div></nav>\n')
 
 
 NOSCRIPT = {"explorer": '<noscript><p style="padding:16px 20px;max-width:70ch">The footprint explorer requires JavaScript. It shows production-based, consumption-based and import-embodied GHG, energy, material, land, water, water stress, biodiversity loss, PM health, value added and employment for 49 regions, 1995-2024, from EXIOBASE 3.11.3. Licence and notes: <a href="/">home page</a>.</p></noscript>\n'}
@@ -126,7 +132,7 @@ def wrap(name, fragment, body_marker):
 
 def write(name, text):
     out = SITE / f"{name}.html"
-    if not text.rstrip().endswith("</html>") or "__EXIO_DATA__" in text or "__LICENCE__" in text:
+    if not text.rstrip().endswith("</html>") or "__EXIO_DATA__" in text or "__LICENCE__" in text or "__FIGURES__" in text:
         sys.exit(f"{name}: generated page looks broken")
     out.write_text(text, encoding="utf-8", newline="\n")
     print(f"Wrote {out.relative_to(HERE)}: {len(text):,} chars")
@@ -135,7 +141,9 @@ def write(name, text):
 licence = html.escape(LICENCE.read_text(encoding="utf-8").strip())
 
 # landing page
+from home_figures import render as render_figures
 idx = (HERE / "pages" / "index.html").read_text(encoding="utf-8").replace("__LICENCE__", licence)
+idx = idx.replace("__FIGURES__", render_figures(json.loads((HERE / "explorer-data.json").read_text(encoding="utf-8"))))
 write("index", wrap("index", idx, '<div class="wrap">'))
 
 # explorer
