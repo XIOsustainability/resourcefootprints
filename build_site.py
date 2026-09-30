@@ -11,9 +11,11 @@ read from 00-workflow/reference/coverage_page, which stays its single source.
 
     python build_site.py
 """
+from datetime import date
 from pathlib import Path
 import html
 import json
+import re
 import sys
 
 HERE = Path(__file__).parent
@@ -22,10 +24,43 @@ COVERAGE_DIR = Path(r"D:\GitHub\EXIOBASE\00-workflow\reference\coverage_page")
 LICENCE = Path(r"D:\indecol\Projects\MRIOs\EXIOBASE3\EXIOBASE_3_11_3\processed\zip\LICENSE.txt")
 ORIGIN = "https://resourcefootprints.com"
 
+TODAY = date.today().isoformat()
+PUBLISHER = {"@type": "Organization", "name": "XIO Sustainability Analytics A/S", "url": "https://xio-sa.com"}
+INDICATORS = ["Greenhouse gas emissions (GWP100, IPCC AR6)", "Net energy use", "Material extraction (domestic extraction used)",
+              "Land use", "Cropland", "Pasture and grassland", "Blue water consumption", "Water stress (AWARE)",
+              "Biodiversity loss from land use (UNEP GLAM)", "Biodiversity loss from freshwater eutrophication (UNEP GLAM)",
+              "Fine particulate matter health impacts (UNEP GLAM)", "Value added", "Employment (hours and persons)"]
+# name -> (path, <title>, meta description, JSON-LD objects)
 PAGES = {
-    "index": ("/", "Environmental and socio-economic footprints of 44 countries and five rest-of-world regions, 1995-2024, from the EXIOBASE multi-regional input-output database."),
-    "explorer": ("/explorer", "Production, consumption and import-embodied greenhouse gas, energy, material, land, water, biodiversity, health and employment results by country and region, 1995-2024, split by resource group and traced through supply chains, from EXIOBASE 3.11.3."),
-    "coverage": ("/coverage", "Which years of each EXIOBASE account rest on reported data and which are projected, and which impact assessment methods are available, for every release from 3.8.2 to 3.12."),
+    "index": ("/", "Resource footprints | Country environmental footprints from EXIOBASE",
+              "Environmental and socio-economic footprints of 44 countries and five rest-of-world regions, 1995-2024, from the EXIOBASE multi-regional input-output database.",
+              [{"@context": "https://schema.org", "@type": "WebSite", "name": "Resource footprints", "url": ORIGIN + "/",
+                "description": "Environmental and socio-economic footprints of 49 world regions, 1995-2024, calculated with EXIOBASE.",
+                "inLanguage": "en", "publisher": PUBLISHER},
+               {"@context": "https://schema.org", **PUBLISHER}]),
+    "explorer": ("/explorer", "Country footprint explorer, 1995-2024 | Resource footprints",
+                 "Production-based, consumption-based and import-embodied GHG, energy, material, land, water, biodiversity, health and employment results for 49 regions, 1995-2024, from EXIOBASE 3.11.3.",
+                 [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Footprint explorer",
+                   "url": ORIGIN + "/explorer", "applicationCategory": "EducationalApplication", "operatingSystem": "Any",
+                   "isAccessibleForFree": True, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"},
+                   "publisher": PUBLISHER},
+                  {"@context": "https://schema.org", "@type": "Dataset",
+                   "name": "Environmental and socio-economic footprints of 49 world regions, 1995-2024 (EXIOBASE 3.11.3)",
+                   "description": "Production-based, consumption-based and import-embodied results for 44 countries and 5 rest-of-world regions, 1995-2024, from EXIOBASE 3.11.3, with sector groups as in UNEP IRP Global Resources Outlook 2024, Table A2.1.",
+                   "url": ORIGIN + "/explorer", "creator": PUBLISHER, "isAccessibleForFree": True,
+                   "isBasedOn": {"@type": "Dataset", "name": "EXIOBASE 3.11.3"},
+                   "temporalCoverage": "1995/2024", "spatialCoverage": {"@type": "Place", "name": "World"},
+                   "measurementTechnique": "Environmentally extended multi-regional input-output analysis",
+                   "variableMeasured": INDICATORS,
+                   "keywords": ["carbon footprint", "material footprint", "consumption-based accounting", "EXIOBASE",
+                                "multi-regional input-output", "biodiversity footprint", "water footprint", "Global Resources Outlook"],
+                   "license": {"@type": "CreativeWork", "name": "EXIOBASE licence (dual commercial and non-commercial)", "url": ORIGIN + "/#licence"},
+                   "dateModified": TODAY}]),
+    "coverage": ("/coverage", "EXIOBASE data coverage by release | Resource footprints",
+                 "Observed and projected years of each account, and available impact methods, in EXIOBASE releases 3.8.2 to 3.12.",
+                 [{"@context": "https://schema.org", "@type": "WebPage", "name": "EXIOBASE data coverage by release",
+                   "url": ORIGIN + "/coverage", "about": {"@type": "Dataset", "name": "EXIOBASE"}, "publisher": PUBLISHER,
+                   "dateModified": TODAY}]),
 }
 NAV_CSS = """<style>
 .rf-nav{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px;padding:10px max(16px,calc((100% - 1500px) / 2 + 20px));border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -45,26 +80,48 @@ def nav(current):
     return f'<nav class="rf-nav" aria-label="Site"><a class="rf-home" href="/"{home}>Resource footprints</a>{items}</nav>\n'
 
 
+NOSCRIPT = {"explorer": '<noscript><p style="padding:16px 20px;max-width:70ch">The footprint explorer requires JavaScript. It shows production-based, consumption-based and import-embodied GHG, energy, material, land, water, water stress, biodiversity loss, PM health, value added and employment for 49 regions, 1995-2024, from EXIOBASE 3.11.3. Licence and notes: <a href="/">home page</a>.</p></noscript>\n'}
+
+
 def wrap(name, fragment, body_marker):
-    path, desc = PAGES[name]
+    path, title, desc, ld = PAGES[name]
     i = fragment.index(body_marker)
     head_part, body_part = fragment[:i], fragment[i:]
+    head_part = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)}</title>", head_part, count=1, flags=re.S)
+    url = ORIGIN + path
+    ld_html = "".join(f'<script type="application/ld+json">{json.dumps(o, ensure_ascii=False)}</script>\n' for o in ld)
     head = f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="{html.escape(desc)}">
-<link rel="canonical" href="{ORIGIN}{path}">
+<link rel="canonical" href="{url}">
+<link rel="alternate" hreflang="en" href="{url}">
+<link rel="alternate" hreflang="x-default" href="{url}">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Resource footprints">
-<meta property="og:url" content="{ORIGIN}{path}">
+<meta property="og:locale" content="en">
+<meta property="og:url" content="{url}">
+<meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
+<meta property="og:image" content="{ORIGIN}/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="World greenhouse gas emissions by resource group, from EXIOBASE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{html.escape(title)}">
+<meta name="twitter:description" content="{html.escape(desc)}">
+<meta name="twitter:image" content="{ORIGIN}/og-image.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0d5f58">
+{ld_html}
 <style>[hidden]{{display:none!important}}img{{max-width:100%}}</style>
 """
-    return head + head_part + NAV_CSS + "\n</head>\n<body>\n" + nav(name) + body_part + "\n</body>\n</html>\n"
+    return head + head_part + NAV_CSS + "\n</head>\n<body>\n" + nav(name) + NOSCRIPT.get(name, "") + body_part + "\n</body>\n</html>\n"
 
 
 def write(name, text):
@@ -100,3 +157,9 @@ if cov.count(tag) != 1 or not cov.startswith("<title>"):
 cov = cov.replace(tag, "<script>\n" + cov_data + "\n</script>")
 cov = cov.replace(cov[:cov.index("</title>") + 8], "<title>Data coverage | Resource footprints</title>", 1)
 write("coverage", wrap("coverage", cov, '<div class="wrap">'))
+
+# sitemap: the three real pages, extensionless, with today's build date
+urls = "".join(f"  <url><loc>{ORIGIN}{p[0]}</loc><lastmod>{TODAY}</lastmod></url>\n" for p in PAGES.values())
+(SITE / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                                  + urls + "</urlset>\n", encoding="utf-8", newline="\n")
+print("Wrote site/sitemap.xml")

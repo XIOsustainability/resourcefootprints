@@ -3,16 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Production, consumption and import-embodied greenhouse gas, energy, material, land, water, biodiversity, health and employment results by country and region, 1995-2024, split by resource group and traced through supply chains, from EXIOBASE 3.11.3.">
+<meta name="description" content="Production-based, consumption-based and import-embodied GHG, energy, material, land, water, biodiversity, health and employment results for 49 regions, 1995-2024, from EXIOBASE 3.11.3.">
 <link rel="canonical" href="https://resourcefootprints.com/explorer">
+<link rel="alternate" hreflang="en" href="https://resourcefootprints.com/explorer">
+<link rel="alternate" hreflang="x-default" href="https://resourcefootprints.com/explorer">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Resource footprints">
+<meta property="og:locale" content="en">
 <meta property="og:url" content="https://resourcefootprints.com/explorer">
-<meta property="og:description" content="Production, consumption and import-embodied greenhouse gas, energy, material, land, water, biodiversity, health and employment results by country and region, 1995-2024, split by resource group and traced through supply chains, from EXIOBASE 3.11.3.">
+<meta property="og:title" content="Country footprint explorer, 1995-2024 | Resource footprints">
+<meta property="og:description" content="Production-based, consumption-based and import-embodied GHG, energy, material, land, water, biodiversity, health and employment results for 49 regions, 1995-2024, from EXIOBASE 3.11.3.">
+<meta property="og:image" content="https://resourcefootprints.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="World greenhouse gas emissions by resource group, from EXIOBASE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Country footprint explorer, 1995-2024 | Resource footprints">
+<meta name="twitter:description" content="Production-based, consumption-based and import-embodied GHG, energy, material, land, water, biodiversity, health and employment results for 49 regions, 1995-2024, from EXIOBASE 3.11.3.">
+<meta name="twitter:image" content="https://resourcefootprints.com/og-image.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0d5f58">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Footprint explorer", "url": "https://resourcefootprints.com/explorer", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "publisher": {"@type": "Organization", "name": "XIO Sustainability Analytics A/S", "url": "https://xio-sa.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Environmental and socio-economic footprints of 49 world regions, 1995-2024 (EXIOBASE 3.11.3)", "description": "Production-based, consumption-based and import-embodied results for 44 countries and 5 rest-of-world regions, 1995-2024, from EXIOBASE 3.11.3, with sector groups as in UNEP IRP Global Resources Outlook 2024, Table A2.1.", "url": "https://resourcefootprints.com/explorer", "creator": {"@type": "Organization", "name": "XIO Sustainability Analytics A/S", "url": "https://xio-sa.com"}, "isAccessibleForFree": true, "isBasedOn": {"@type": "Dataset", "name": "EXIOBASE 3.11.3"}, "temporalCoverage": "1995/2024", "spatialCoverage": {"@type": "Place", "name": "World"}, "measurementTechnique": "Environmentally extended multi-regional input-output analysis", "variableMeasured": ["Greenhouse gas emissions (GWP100, IPCC AR6)", "Net energy use", "Material extraction (domestic extraction used)", "Land use", "Cropland", "Pasture and grassland", "Blue water consumption", "Water stress (AWARE)", "Biodiversity loss from land use (UNEP GLAM)", "Biodiversity loss from freshwater eutrophication (UNEP GLAM)", "Fine particulate matter health impacts (UNEP GLAM)", "Value added", "Employment (hours and persons)"], "keywords": ["carbon footprint", "material footprint", "consumption-based accounting", "EXIOBASE", "multi-regional input-output", "biodiversity footprint", "water footprint", "Global Resources Outlook"], "license": {"@type": "CreativeWork", "name": "EXIOBASE licence (dual commercial and non-commercial)", "url": "https://resourcefootprints.com/#licence"}, "dateModified": "2026-09-30"}</script>
+
 <style>[hidden]{display:none!important}img{max-width:100%}</style>
-<title>Footprint explorer | Resource footprints</title>
+<title>Country footprint explorer, 1995-2024 | Resource footprints</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -153,10 +171,11 @@ table.data td{font-family:var(--mono)}
 </head>
 <body>
 <nav class="rf-nav" aria-label="Site"><a class="rf-home" href="/">Resource footprints</a><a href="/explorer" aria-current="page">Footprint explorer</a><a href="/coverage">Data coverage</a></nav>
+<noscript><p style="padding:16px 20px;max-width:70ch">The footprint explorer requires JavaScript. It shows production-based, consumption-based and import-embodied GHG, energy, material, land, water, water stress, biodiversity loss, PM health, value added and employment for 49 regions, 1995-2024, from EXIOBASE 3.11.3. Licence and notes: <a href="/">home page</a>.</p></noscript>
 <div class="wrap">
   <header class="top">
     <h1>Footprint explorer</h1>
-    <div class="meta">EXIOBASE <b>3.11.3</b>, release expected 30 October 2026 · <b>49</b> countries and rest-of-world regions · <b>1995-2024</b> · production, consumption and import-embodied accounts</div>
+    <div class="meta">EXIOBASE <b>3.11.3</b> · <b>49</b> regions · <b>1995-2024</b></div>
   </header>
   <div class="layout">
     <aside class="picker" aria-label="Regions">
@@ -178,11 +197,11 @@ table.data td{font-family:var(--mono)}
     </main>
   </div>
   <footer class="site-foot">
-    <h2>About these results</h2>
-    <p>Calculated from EXIOBASE 3.11.3 (release expected 30 October 2026; results can still change before then). Greenhouse gases are GWP100 (IPCC AR6). Biodiversity loss, freshwater eutrophication and PM health impacts are characterised with UNEP GLAM; water stress is blue water consumption weighted by AWARE. Resource groups follow UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1, with impacts counted in the sector where they occur. Years drawn dotted rest on projected tables or carried-forward accounts; see <a href="/coverage">data coverage</a>. Custom groups are stored in your browser only.</p>
-    <h2 id="licence">Data licence</h2>
-    <p>The results on this page are derived from EXIOBASE and are published with attribution to EXIOBASE, as section (b) of the EXIOBASE licence requires for derived results. They are totals and ratios for countries and regions; EXIOBASE coefficients (such as direct or supply-chain multipliers and emission factors) and raw data from the EXIOBASE package are not published here.</p>
-    <p>EXIOBASE is released under a dual commercial and non-commercial licence. Non-commercial use by universities and non-profit research institutes, environmental and social NGOs, government bodies and publicly owned organisations is free under a customised derivative of the CC BY-NC-SA 4.0 licence. Any other use needs a commercial licence. Copyright: MSUT, IOTs and emission data &copy; 2024 XIO SA AS; material extensions &copy; 2024 Vienna University of Economics and Business (WU), released under CC BY-SA. Licence enquiries: exiobase-support@googlegroups.com.</p>
+    <h2>Data</h2>
+    <p>EXIOBASE 3.11.3. GHG: GWP100, IPCC AR6. Biodiversity loss, freshwater eutrophication and PM health: UNEP GLAM. Water stress: blue water consumption weighted by AWARE. Sector groups: UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1. Dotted lines: projected years.</p>
+    <h2 id="licence">Licence</h2>
+    <p>Derived from EXIOBASE and published with attribution under section (b) of the EXIOBASE licence. No EXIOBASE coefficients (multipliers, emission factors) or raw data are published here.</p>
+    <p>EXIOBASE is licensed for free non-commercial use by universities, non-profit research institutes, environmental and social NGOs, government bodies and publicly owned organisations, under a customised derivative of CC BY-NC-SA 4.0. Other use requires a commercial licence. Copyright: MSUT, IOTs and emission data &copy; 2024 XIO SA AS; material extensions &copy; 2024 Vienna University of Economics and Business (WU), CC BY-SA. Contact: exiobase-support@googlegroups.com.</p>
     <details>
       <summary>Full EXIOBASE licence text</summary>
       <pre>EXIOBASE is released under a dual commercial and non-commercial license. Please see the conditions below for details. Feel free to contact us at exiobase-support@googlegroups.com for any clarifications.
@@ -742,23 +761,23 @@ const view=$('#view');
 function panel(title, sub, id, extra){ return `<div class="panel"><h2>${title}</h2>${sub?`<p class="sub">${sub}</p>`:''}${extra||''}<div id="${id}"></div></div>`; }
 function projNote(ind){
   const bits=[];
-  if(ind.cf) bits.push(`material extraction is carried forward from ${ind.cf}, drawn dotted`);
-  else if(ind.proj===2023) bits.push('employment for 2023-2024 is filled upstream, drawn dotted');
-  else if(ind.fam==='Land') bits.push('land accounts end in 2023');
-  else bits.push('2024 rests on a projected table, drawn dotted');
+  if(ind.cf) bits.push(`dotted from ${ind.cf}: material extraction carried forward`);
+  else if(ind.proj===2023) bits.push('dotted from 2023: employment projected');
+  else if(ind.fam==='Land') bits.push('land ends in 2023');
+  else bits.push('dotted: 2024, projected table');
   return bits.join('; ');
 }
 function selSeries(indId, acc, metric){
   const ind=indOf(indId);
   return state.sel.map(k=>({key:k,name:regName(k),color:colorOf(k),values:series(k,indId,acc,metric),proj:projFrom(ind)}));
 }
-function groupImpNote(){ return state.sel.some(isGroup)?' For groups, imports embodied are the sum of member imports, so they include trade between members.':''; }
+function groupImpNote(){ return state.sel.some(isGroup)?' Group imports are the sum of member imports and include trade between members.':''; }
 
 function viewTrends(){
   const ind=indOf(state.ind), S=selSeries(state.ind,state.acc,state.metric);
   const unit=unitOf(state.ind,state.metric);
   view.innerHTML=panel(`${ind.label}, ${ACC_LONG[state.acc]}`, `${METRIC[state.metric]} · ${unit}`, 'c1', legendHTML(S))+
-    `<div class="notes"><p>Hover for values. Solid lines are built years; ${projNote(ind)}. Per-capita and per-GDP measures end in 2023 because population and GDP PPP are not available for 2024.${state.acc==='imp'?groupImpNote():''}</p>
+    `<div class="notes"><p>${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}. Per capita and per GDP end in 2023 (no population or GDP PPP for 2024).${state.acc==='imp'?groupImpNote():''}</p>
     <p><button class="btn" type="button" id="tblBtn">${state.showTable?'Hide':'Show'} data table</button></p></div><div class="panel tablewrap" id="tbl" ${state.showTable?'':'hidden'}></div>`;
   if(!S.length){ $('#c1').innerHTML='<div class="empty">Select at least one region.</div>'; return; }
   lineChart($('#c1'),{series:S,unit,height:380,zero:state.metric!=='idx',ref:state.metric==='idx'?100:null});
@@ -773,8 +792,8 @@ function viewGap(){
   const pc='var(--s2)', cc='var(--s1)';
   let cells=state.sel.map((k,i)=>`<div class="cell"><h3><i class="sw" style="background:${colorOf(k)}"></i>${regName(k)}</h3><div id="m${i}"></div></div>`).join('');
   view.innerHTML=`<div class="panel"><h2>${ind.label}: production and consumption</h2><p class="sub">${METRIC[state.metric]} · ${unit}</p>${legendHTML([{name:'Consumption-based (CBA)',color:cc},{name:'Production-based (PBA)',color:pc}])}<div class="multiples">${cells||'<div class="empty">Select at least one region.</div>'}</div></div>`+
-    panel('Consumption relative to production','100 × (CBA / PBA - 1), %. Above zero the region consumes more than it produces, a net importer of the pressure.','c2',legendHTML(state.sel.map(k=>({name:regName(k),color:colorOf(k)}))))+
-    `<div class="notes"><p>The shaded band is the gap between the two accounts. ${projNote(ind)}.</p></div>`;
+    panel('Consumption relative to production','100 × (CBA / PBA - 1), %.','c2',legendHTML(state.sel.map(k=>({name:regName(k),color:colorOf(k)}))))+
+    `<div class="notes"><p>Shading: difference between the two accounts. ${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}.</p></div>`;
   state.sel.forEach((k,i)=>{
     const P=series(k,state.ind,'PBA',state.metric), C=series(k,state.ind,'CBA',state.metric);
     const a={name:'CBA',color:cc,values:C,proj:projFrom(ind)}, b={name:'PBA',color:pc,values:P,proj:projFrom(ind)};
@@ -790,7 +809,7 @@ function viewRank(){
   const items=keys.map(k=>({key:k,name:regName(k),value:series(k,state.ind,state.acc,state.metric)[t],color:state.sel.includes(k)?colorOf(k):null}));
   const hidden = state.sel.filter(k=>!keys.includes(k));
   view.innerHTML=panel(`${ind.label}, ${ACC_LONG[state.acc]}, ${yr}`,`${METRIC[state.metric]} · ${unit}. Selected regions are coloured.`,'c1')+
-   `<div class="notes"><p>${state.rankSet==='groups'?'Groups overlap (a country sits in an economic group and a continent), so this is a comparison, not a partition.':'Five rest-of-world regions sit alongside the 44 countries.'}${hidden.length?` Not in this list: ${hidden.map(regName).join(', ')}; switch Compare to see ${hidden.length>1?'them':'it'}.`:''}${yr>=projFrom(ind)?' This year is projected.':''}${state.acc==='imp'&&state.rankSet==='groups'?' Group imports include trade between members.':''}</p></div>`;
+   `<div class="notes"><p>${state.rankSet==='groups'?'Groups overlap.':'44 countries and 5 rest-of-world regions.'}${hidden.length?` Not shown: ${hidden.map(regName).join(', ')}.`:''}${yr>=projFrom(ind)?' Projected year.':''}${state.acc==='imp'&&state.rankSet==='groups'?' Group imports include trade between members.':''}</p></div>`;
   rankBars($('#c1'),{items,unit});
 }
 function viewAffluence(){
@@ -803,8 +822,8 @@ function viewAffluence(){
       trail:(sel&&state.trails)?Y.map((_,j)=>j).filter(j=>j<=t).map(j=>[pop[j]?gdp[j]/pop[j]:null,s[j]]).filter(q=>q[0]&&q[1]):null};
   }).filter(p=>p.x&&p.y);
   const unit=unitOf(state.ind,'pc');
-  view.innerHTML=panel(`${ind.label} per person against income, ${yr}`,`${ACC_LONG[state.acc]} · both axes logarithmic · circle area follows population`,'c1')+
-    `<div class="notes"><p>Grey circles are the 49 countries and rest-of-world regions; selected regions are coloured${state.trails?' and trace their path since 1995':''}. Press Play to animate. GDP PPP ends in 2023. Selected groups are plotted at their aggregate values.</p></div>`;
+  view.innerHTML=panel(`${ind.label} per person and GDP PPP per person, ${yr}`,`${ACC_LONG[state.acc]} · log axes · circle area: population`,'c1')+
+    `<div class="notes"><p>Grey: the 49 regions. Coloured: selected regions${state.trails?', with values since 1995':''}. GDP PPP ends in 2023.</p></div>`;
   scatter($('#c1'),{points:pts,xLabel:'GDP PPP per person, $',yLabel:unit,xShort:'GDP PPP per person, $',yShort:unit,height:Math.min(520,Math.max(360,$('#view').clientWidth*0.55))});
 }
 function viewDecouple(){
@@ -816,8 +835,8 @@ function viewDecouple(){
     {name:`${ind.label}, consumption`,color:'var(--s2)',values:idx(R.values.CBA[state.ind]),proj:projFrom(ind)},
     {name:`${ind.label}, production`,color:'var(--s7)',values:idx(R.values.PBA[state.ind]),proj:projFrom(ind)},
   ];
-  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label} against the economy`,'Index, 1995 = 100','c1',legendHTML(S))+
-    `<div class="notes"><p>Real GDP is constant-price USD. Where the pressure lines sit below real GDP the region is decoupling in relative terms; a falling pressure line is absolute decoupling. ${projNote(ind)}.</p></div>`;
+  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label}, real GDP and population`,'Index, 1995 = 100','c1',legendHTML(S))+
+    `<div class="notes"><p>Real GDP in constant USD. ${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}.</p></div>`;
   lineChart($('#c1'),{series:S,unit:'1995 = 100',height:380,zero:false,ref:100,noEndLabels:true});
 }
 function viewComp(){
@@ -830,7 +849,7 @@ function viewComp(){
   const leg=legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box');
   view.innerHTML=`<div class="twocol">`+panel(`${regName(state.focus)}: ${ind.label} footprint by consumption category`,mode==='share'?'Share of the consumption-based footprint, %':unit,'c1',leg)+
     panel(`Selected regions, ${yr}`,'Share of the consumption-based footprint, %','c2',leg)+`</div>`+
-    `<div class="notes"><p>Final demand of the region (households, government and investment) is grouped by product purpose; "Other products" are those outside the six categories, and "Direct (households)" is what households emit or use themselves (fuel burnt at home and in cars, household water). The categories sum to the consumption footprint on the Trends tab. ${projNote(ind)}.</p></div>`;
+    `<div class="notes"><p>Final demand (households, government, investment) grouped by product. Other products: products outside the six categories. Direct (households): household emissions and use, such as fuel for heating and cars. Categories sum to the consumption-based total. ${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}.</p></div>`;
   stackedArea($('#c1'),{layers,percent:mode==='share',height:340,unit,proj:projFrom(ind)});
   shareBars($('#c2'),{rows,colors,names});
 }
@@ -844,7 +863,7 @@ function viewBreakdown(){
   if(B.rest) layers.push({name:B.rest,color:'var(--muted-mark)',values:rest});
   const unit=state.breakMetric==='share'?'%':unitOf(state.breakInd,metric);
   view.innerHTML=panel(`${regName(state.focus)}: ${B.label.toLowerCase()}, ${ACC_LONG[acc]}`,state.breakMetric==='share'?'Share of total, %':`${unit}`,'c1',legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box'))+
-    `<div class="notes"><p>${B.rest?`The grey layer is the difference between the reported total and the itemised rows${state.breakInd==='Land - Total'?'; for land it includes forest':''}. `:'Non-combustion is total GHG minus fuel combustion, so it includes SF6, HFC, PFC and NF3. '}${projNote(ind)}.</p></div>`;
+    `<div class="notes"><p>${B.rest?`Grey: total minus the itemised rows${state.breakInd==='Land - Total'?', including forest':''}. `:'Non-combustion: total minus fuel combustion, including SF6, HFC, PFC and NF3. '}${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}.</p></div>`;
   stackedArea($('#c1'),{layers,percent:state.breakMetric==='share',height:360,unit,proj:projFrom(ind)});
 }
 function viewGroups(){
@@ -856,11 +875,11 @@ function viewGroups(){
   const share=k=>{ const g=rgOf(k,view_,state.rgInd); const tot=GRP.reduce((s,x)=>s+(g[x][t]||0),0); return tot?EXTRACT.reduce((s,x)=>s+(g[x][t]||0),0)/tot*100:null; };
   const rows=state.sel.map(k=>{ const g=rgOf(k,view_,state.rgInd); return {name:regName(k),parts:GRP.map(x=>g[x][t])}; });
   const leg=legendHTML(layers.map(l=>({name:l.name,color:l.color})),'box');
-  const vlabel=view_==='PBA'?'where it occurs (production)':'consumption footprint, by the stage it originates in';
+  const vlabel=view_==='PBA'?'production-based':'consumption-based, by sector group of origin';
   const s0=share(state.focus);
-  view.innerHTML=`<div class="twocol">`+panel(`${regName(state.focus)}: ${ind.label} by resource group`,`${vlabel} · ${mode==='share'?'share, %':unit}`,'c1',leg+(s0!=null?`<p class="sub">In ${yr}, extraction and processing of biomass, fossil resources, metals and non-metallic minerals account for <b>${fmt(s0,2)}%</b>.</p>`:''))+
+  view.innerHTML=`<div class="twocol">`+panel(`${regName(state.focus)}: ${ind.label} by resource group`,`${vlabel} · ${mode==='share'?'share, %':unit}`,'c1',leg+(s0!=null?`<p class="sub">${yr}: biomass, fossil resources, metals and non-metallic minerals, ${fmt(s0,2)}% of the total.</p>`:''))+
     panel(`Selected regions, ${yr}`,`Share by resource group, %`,'c2',leg)+`</div>`+
-    `<div class="notes"><p>Sectors are grouped as in the Global Resources Outlook 2024 (UNEP IRP, Methodological Annex 2, Table A2.1): each resource group covers the extraction and processing sectors of that resource; everything else is the remaining economy. Impacts are counted in the sector where they occur, so electricity used in processing counts under the remaining economy. GRO's own shares include more of the supply chain and read higher for GHG. ${view_==='CBA'?'The footprint view traces the region\'s final demand back to the sector group, anywhere in the world, where each impact occurs. ':''}${projNote(ind)}.</p></div>`;
+    `<div class="notes"><p>Sector groups: UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1. Impacts are assigned to the sector where they occur; electricity is in the remaining economy. ${view_==='CBA'?'Consumption-based: final demand of the region, by the sector group where the impact occurs. ':''}${projNote(ind)[0].toUpperCase()+projNote(ind).slice(1)}.</p></div>`;
   stackedArea($('#c1'),{layers,percent:mode==='share',height:360,unit,proj:projFrom(ind)});
   shareBars($('#c2'),{rows,colors:GRP.map(g=>GRP_COLOR[g]),names:GRP.map(g=>GRP_LABEL[g])});
 }
@@ -932,9 +951,9 @@ function viewFlows(){
   if(hh>0){ links.push({s:'o0',t:'ghouseholds',v:hh,color:GRP_COLOR.households}); links.push({s:'ghouseholds',t:'cDirect (households)',v:hh,color:GRP_COLOR.households}); }
   let total=hh; for(let i=0;i<len-1;i++) total+=acc[i]*f;
   let domestic=hh; for(let g=0;g<ng;g++) for(let c=0;c<nc;c++) domestic+=T(0,g,c);
-  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label} footprint, ${yr}`,`Where the impact occurs → which resource stage → what final demand it serves · total ${fmt(total)} ${unit}`,'c1',
-      `<p class="sub">${fmt((1-domestic/total)*100,2)}% of this footprint occurs outside ${isGroup(state.focus)?'the member countries themselves':regName(state.focus)}.</p>`)+
-    `<div class="notes"><p>Each band is part of the consumption footprint: on the left, the region where the impact physically occurs (continents exclude the ${isGroup(state.focus)?'member countries':'region'} itself); in the middle, the resource group of the sector where it occurs (GRO 2024, Table A2.1); on the right, the final-demand product category it ends up in. Hover a band for its value and share. ${yr>=String(projFrom(ind))?'This year is projected. ':''}Flows are computed from the full multi-regional model for ${SK.sankey_years.join(', ')}.</p></div>`;
+  view.innerHTML=panel(`${regName(state.focus)}: ${ind.label} footprint, ${yr}`,`Consumption-based. Left: region where the impact occurs. Middle: sector group. Right: final-demand category. Total ${fmt(total)} ${unit}.`,'c1',
+      `<p class="sub">Outside ${isGroup(state.focus)?'the member countries':regName(state.focus)}: ${fmt((1-domestic/total)*100,2)}%.</p>`)+
+    `<div class="notes"><p>Continents exclude the ${isGroup(state.focus)?'member countries':'region'} itself. Sector groups: GRO 2024, Table A2.1. ${yr>=String(projFrom(ind))?'Projected year. ':''}Available years: ${SK.sankey_years.join(', ')}.</p></div>`;
   sankey($('#c1'),{cols,links,unit,total,height:Math.min(560,Math.max(380,view.clientWidth*0.5))});
 }
 function renderView(){

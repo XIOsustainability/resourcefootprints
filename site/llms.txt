@@ -1,0 +1,8 @@
+# Resource footprints
+
+Environmental and socio-economic footprints of 44 countries and 5 rest-of-world regions, 1995-2024, calculated with EXIOBASE 3.11.3.
+
+- [Footprint explorer](https://resourcefootprints.com/explorer): production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group.
+- [Data coverage](https://resourcefootprints.com/coverage): observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.
+
+Licence: results derived from EXIOBASE, published with attribution under section (b) of the EXIOBASE licence. See https://resourcefootprints.com/#licence
