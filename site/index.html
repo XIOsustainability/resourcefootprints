@@ -83,8 +83,7 @@ h2{font-family:var(--cond);font-weight:600;font-size:18px;margin:0 0 8px;text-wr
 .card:hover{border-color:var(--accent)}
 .card h2{color:var(--accent);margin:0 0 4px}
 .card p{margin:0;color:var(--ink-2);font-size:14px}
-.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin:0 0 32px}
-@media (max-width:860px){.cols{grid-template-columns:minmax(0,1fr);gap:8px}}
+.cols{max-width:78ch;margin:0 0 32px}
 section p,section li{color:var(--ink-2);font-size:14px}
 section ul{padding-left:18px;margin:0}
 section li{margin:0 0 8px}
@@ -119,16 +118,6 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
   </div>
 
   <div class="cols">
-  <section aria-labelledby="notes">
-    <h2 id="notes">Notes</h2>
-    <ul>
-      <li>Dotted lines are projected years.</li>
-      <li>Sector groups (biomass, fossil resources, metals, non-metallic minerals, remaining economy) follow UNEP IRP, Global Resources Outlook 2024, Methodological Annex 2, Table A2.1. Impacts are assigned to the sector where they occur.</li>
-      <li>The row <code>GWP100 - AR6 - total non combustion</code> in EXIOBASE 3.11.2 and 3.11.3 omits SF6, HFC, PFC and NF3. Non-combustion GHG is shown here as total minus combustion.</li>
-      <li>Group values are sums of member regions. Group imports include trade between members.</li>
-    </ul>
-  </section>
-
   <section aria-labelledby="licence">
     <h2 id="licence">Licence</h2>
     <p>Derived from EXIOBASE and published with attribution under section (b) of the EXIOBASE licence. No EXIOBASE coefficients (multipliers, emission factors) or raw data are published here.</p>
