@@ -20,7 +20,7 @@ import urllib.error
 import urllib.request
 
 HOST = 'resourcefootprints.com'
-DEFAULT = ['/', '/explorer', '/coverage']
+DEFAULT = ['/', '/explorer']
 
 
 def load_key():

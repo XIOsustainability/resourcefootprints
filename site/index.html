@@ -78,8 +78,7 @@ h2{font-family:var(--cond);font-weight:600;font-size:18px;margin:0 0 8px;text-wr
 .leg{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:8px;font-size:12px;color:var(--ink-2)}
 .leg span{display:inline-flex;align-items:center;gap:5px}
 .leg i{width:10px;height:10px;border-radius:2px;display:inline-block}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 40px}
-@media (max-width:720px){.cards{grid-template-columns:minmax(0,1fr)}}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:0 0 40px}
 .card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;color:inherit;text-decoration:none}
 .card:hover{border-color:var(--accent)}
 .card h2{color:var(--accent);margin:0 0 4px}
@@ -108,7 +107,7 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
 </style>
 </head>
 <body>
-<nav class="rf-nav" aria-label="Site" style="--rf-w:1120px;--rf-pad:20px;margin-bottom:0"><div class="rf-nav-in"><a class="rf-home" href="/" aria-current="page">Resource footprints</a><a href="/explorer">Footprint explorer</a><a href="/coverage">Data coverage</a></div></nav>
+<nav class="rf-nav" aria-label="Site" style="--rf-w:1120px;--rf-pad:20px;margin-bottom:0"><div class="rf-nav-in"><a class="rf-home" href="/" aria-current="page">Resource footprints</a><a href="/explorer">Footprint explorer</a></div></nav>
 <div class="wrap">
   <h1>Resource footprints</h1>
   <p class="lede">Environmental and socio-economic footprints of 44 countries and 5 rest-of-world regions, 1995-2024, calculated with EXIOBASE 3.11.3.</p>
@@ -117,7 +116,6 @@ footer{border-top:1px solid var(--line);padding-top:14px;color:var(--ink-3);font
 
   <div class="cards">
     <a class="card" href="/explorer"><h2>Footprint explorer</h2><p>Production-based, consumption-based and import-embodied results for 22 indicators, by region and by sector group, 1995-2024.</p></a>
-    <a class="card" href="/coverage"><h2>Data coverage</h2><p>Observed and projected years of each account in EXIOBASE 3.8.2 to 3.12.</p></a>
   </div>
 
   <div class="cols">

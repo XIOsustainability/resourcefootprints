@@ -8,7 +8,7 @@
   Permissions-Policy: geolocation=(), camera=(), microphone=()
   Cache-Control: public, max-age=3600
 
-# Pages are extensionless (/explorer, /coverage), so they are covered by /* above.
+# Pages are extensionless (/explorer), so they are covered by /* above.
 # The sankey data changes only when the explorer is rebuilt.
 /explorer-sankey.json
   Cache-Control: public, max-age=3600

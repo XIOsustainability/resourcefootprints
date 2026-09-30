@@ -3,11 +3,9 @@
 
   pages/index.html         -> site/index.html     (licence text inlined)
   explorer_template.html   -> site/explorer.html  (explorer-data.json inlined)
-  00-workflow coverage     -> site/coverage.html  (coverage_data.js inlined)
 
 Every page is a fragment (<title>, <link>, <style>, then markup); this wraps
-each in a full document with a shared head and nav bar. The coverage page is
-read from 00-workflow/reference/coverage_page, which stays its single source.
+each in a full document with a shared head and nav bar.
 
     python build_site.py
 """
@@ -20,7 +18,6 @@ import sys
 
 HERE = Path(__file__).parent
 SITE = HERE / "site"
-COVERAGE_DIR = Path(r"D:\GitHub\EXIOBASE\00-workflow\reference\coverage_page")
 LICENCE = Path(r"D:\indecol\Projects\MRIOs\EXIOBASE3\EXIOBASE_3_11_3\processed\zip\LICENSE.txt")
 ORIGIN = "https://resourcefootprints.com"
 
@@ -56,11 +53,6 @@ PAGES = {
                                 "multi-regional input-output", "biodiversity footprint", "water footprint", "Global Resources Outlook"],
                    "license": {"@type": "CreativeWork", "name": "EXIOBASE licence (dual commercial and non-commercial)", "url": ORIGIN + "/#licence"},
                    "dateModified": TODAY}]),
-    "coverage": ("/coverage", "EXIOBASE data coverage by release | Resource footprints",
-                 "Observed and projected years of each account, and available impact methods, in EXIOBASE releases 3.8.2 to 3.12.",
-                 [{"@context": "https://schema.org", "@type": "WebPage", "name": "EXIOBASE data coverage by release",
-                   "url": ORIGIN + "/coverage", "about": {"@type": "Dataset", "name": "EXIOBASE"}, "publisher": PUBLISHER,
-                   "dateModified": TODAY}]),
 }
 NAV_CSS = """<style>
 .rf-nav{border-bottom:1px solid rgba(127,137,139,.35);font:500 14px/1.4 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -73,11 +65,11 @@ NAV_CSS = """<style>
 @media (max-width:520px){.rf-nav-in{padding:10px 16px}}
 </style>"""
 # content column of each page, so the nav lines up with it: (max-width incl. padding, side padding, space below)
-NAV_FRAME = {"index": ("1120px", "20px", "0"), "explorer": ("1500px", "20px", "0"), "coverage": ("1060px", "0px", "28px")}
+NAV_FRAME = {"index": ("1120px", "20px", "0"), "explorer": ("1500px", "20px", "0")}
 
 
 def nav(current):
-    links = [("/explorer", "Footprint explorer", "explorer"), ("/coverage", "Data coverage", "coverage")]
+    links = [("/explorer", "Footprint explorer", "explorer")]
     cur = ' aria-current="page"'
     items = "".join(f'<a href="{h}"{cur if k == current else ""}>{n}</a>' for h, n, k in links)
     home = cur if current == "index" else ""
@@ -156,15 +148,6 @@ if not (SITE / "explorer-sankey.json").exists():
     sys.exit("site/explorer-sankey.json missing; run build_explorer_data.py")
 write("explorer", wrap("explorer", tpl.replace("/*__DATA__*/", "window.EXIO=" + data + ";"), '<div class="wrap">'))
 
-# coverage, from 00-workflow
-cov = (COVERAGE_DIR / "exiobase_coverage.html").read_text(encoding="utf-8")
-cov_data = (COVERAGE_DIR / "coverage_data.js").read_text(encoding="utf-8")
-tag = '<script src="coverage_data.js"></script>'
-if cov.count(tag) != 1 or not cov.startswith("<title>"):
-    sys.exit("the 00-workflow coverage page changed shape; update build_site.py")
-cov = cov.replace(tag, "<script>\n" + cov_data + "\n</script>")
-cov = cov.replace(cov[:cov.index("</title>") + 8], "<title>Data coverage | Resource footprints</title>", 1)
-write("coverage", wrap("coverage", cov, '<div class="wrap">'))
 
 # sitemap: the three real pages, extensionless, with today's build date
 urls = "".join(f"  <url><loc>{ORIGIN}{p[0]}</loc><lastmod>{TODAY}</lastmod></url>\n" for p in PAGES.values())
